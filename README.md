@@ -1,5 +1,5 @@
 # MediHub
-## MediHub is a healthcare application developed using Java and MySQL, focused on providing a seamless experience for managing patient records, appointments, and healthcare data. This project utilizes Java JDBC for performing CRUD operations to interact with the database.
+ MediHub is a healthcare application developed using Java and MySQL, focused on providing a seamless experience for managing patient records, appointments, and healthcare data. This project utilizes Java JDBC for performing CRUD operations to interact with the database.
 ## Project Structure
 ```
 MediHub/
