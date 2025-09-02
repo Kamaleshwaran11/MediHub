@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MediHub Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Google Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            color: #222;
+        }
+        .sidebar {
+            width: 220px;
+            background: #1976d2;
+            color: #fff;
+            height: 100vh;
+            position: fixed;
+            left: 0; top: 0;
+            display: flex;
+            flex-direction: column;
+            padding-top: 30px;
+        }
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            padding: 15px 30px;
+            display: block;
+            transition: background 0.2s;
+            font-size: 16px;
+        }
+        .sidebar a.active, .sidebar a:hover {
+            background: #1565c0;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 30px 40px;
+        }
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dashboard-header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+        .dashboard-cards {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+            padding: 30px;
+            flex: 1 1 200px;
+            min-width: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .card .icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #1976d2;
+        }
+        .card .value {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        .card .label {
+            color: #888;
+            font-size: 1rem;
+        }
+        .reports-section {
+            margin-top: 40px;
+        }
+        .reports-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .reports-header h2 {
+            margin: 0;
+            font-size: 1.4rem;
+        }
+        .reports-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        .reports-table th, .reports-table td {
+            padding: 14px 18px;
+            text-align: left;
+        }
+        .reports-table th {
+            background: #f0f4f8;
+            font-weight: 700;
+        }
+        .reports-table tr:not(:last-child) {
+            border-bottom: 1px solid #e0e0e0;
+        }
+        @media (max-width: 900px) {
+            .dashboard-cards {
+                flex-direction: column;
+            }
+            .main-content {
+                padding: 20px 10px;
+            }
+        }
+        @media (max-width: 600px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                padding: 10px 0;
+            }
+            .sidebar h2 {
+                display: none;
+            }
+            .sidebar a {
+                padding: 10px 12px;
+                font-size: 14px;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="sidebar">
+        <h2>MediHub</h2>
+        <a href="#" class="active"><i class="fa fa-chart-line"></i> Dashboard</a>
+        <a href="#"><i class="fa fa-file-alt"></i> Reports</a>
+        <a href="#"><i class="fa fa-user-md"></i> Doctors</a>
+        <a href="#"><i class="fa fa-users"></i> Patients</a>
+        <a href="#"><i class="fa fa-calendar"></i> Appointments</a>
+        <a href="#"><i class="fa fa-cog"></i> Settings</a>
+    </nav>
+    <div class="main-content">
+        <div class="dashboard-header">
+            <h1>Dashboard</h1>
+            <div>
+                <i class="fa fa-user-circle" style="font-size:1.8rem;color:#1976d2;"></i>
+            </div>
+        </div>
+        <div class="dashboard-cards">
+            <div class="card">
+                <div class="icon"><i class="fa fa-users"></i></div>
+                <div class="value" id="patientsCount">1,250</div>
+                <div class="label">Total Patients</div>
+            </div>
+            <div class="card">
+                <div class="icon"><i class="fa fa-user-md"></i></div>
+                <div class="value" id="doctorsCount">85</div>
+                <div class="label">Doctors</div>
+            </div>
+            <div class="card">
+                <div class="icon"><i class="fa fa-calendar-check"></i></div>
+                <div class="value" id="appointmentsCount">320</div>
+                <div class="label">Appointments</div>
+            </div>
+            <div class="card">
+                <div class="icon"><i class="fa fa-file-invoice-dollar"></i></div>
+                <div class="value" id="revenueCount">$45,000</div>
+                <div class="label">Revenue</div>
+            </div>
+        </div>
+        <div class="reports-section">
+            <div class="reports-header">
+                <h2>Recent Reports</h2>
+                <button style="background:#1976d2;color:#fff;border:none;padding:8px 18px;border-radius:5px;cursor:pointer;">
+                    <i class="fa fa-download"></i> Download
+                </button>
+            </div>
+            <table class="reports-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Report Name</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024-06-10</td>
+                        <td>Patient Summary</td>
+                        <td>PDF</td>
+                        <td><span style="color:green;">Completed</span></td>
+                        <td><a href="#"><i class="fa fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>2024-06-09</td>
+                        <td>Appointment Stats</td>
+                        <td>Excel</td>
+                        <td><span style="color:green;">Completed</span></td>
+                        <td><a href="#"><i class="fa fa-download"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>2024-06-08</td>
+                        <td>Revenue Report</td>
+                        <td>PDF</td>
+                        <td><span style="color:orange;">Processing</span></td>
+                        <td><a href="#"><i class="fa fa-spinner fa-spin"></i></a></td>
+                    </tr>
+                    <tr>
+                        <td>2024-06-07</td>
+                        <td>Doctor Performance</td>
+                        <td>Excel</td>
+                        <td><span style="color:green;">Completed</span></td>
+                        <td><a href="#"><i class="fa fa-download"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html></div>
