@@ -1,5 +1,5 @@
 async function loadMedicines(page=0) {
-    let res = await fetch(`http://localhost:8080/api/medicines?page=${page}&size=200`);
+    let res = await fetch(`http://localhost:8080/api/medicines?page=${page}&size=1000`);
     let data = await res.json();
     let grid = document.querySelector("#medicineGrid");
     grid.innerHTML = "";
