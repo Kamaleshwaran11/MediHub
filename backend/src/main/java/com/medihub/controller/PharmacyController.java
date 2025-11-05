@@ -16,14 +16,14 @@ public class PharmacyController {
     @Autowired
     private PharmacyRepository repo;
 
-    // ✅ Pagination API
+    // Pagination API
     @GetMapping
     public Page<Medicine> getAllMedicines(@RequestParam(defaultValue = "0") int page,
                                           @RequestParam(defaultValue = "50") int size) {
         return repo.findAll(PageRequest.of(page, size));
     }
 
-    // ✅ Search API
+    //  Search API
     @GetMapping("/search")
     public List<Medicine> searchMedicines(@RequestParam String keyword) {
         return repo.findByProductNameContainingIgnoreCaseOrSaltCompositionContainingIgnoreCase(keyword, keyword);

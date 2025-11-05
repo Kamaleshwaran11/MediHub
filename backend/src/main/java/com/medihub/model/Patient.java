@@ -14,6 +14,16 @@ public class Patient {
     private int age;
     private String gender;
     private String phone;
+
+    // ID getter/setter so JSON serialization includes id
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }

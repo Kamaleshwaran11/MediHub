@@ -1,24 +1,36 @@
 package com.medihub.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "billing")
+@Table(name = "billings")
 public class Billing {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "patient_name", nullable = false)
+    @Column(nullable = false)
     private String patientName;
 
-    @Column(name = "amount", nullable = false)
+    @Column(unique = true)
+    private String invoiceNumber;
+
+    @Column(nullable = false)
     private BigDecimal amount;
 
-    @Column(name = "status", nullable = false)
-    private String status;
+    @Column(nullable = false)
+    private LocalDate billDate = LocalDate.now();
+
+    @Column(nullable = false)
+    private String status = "PENDING";
 
     // Getters and Setters
     public Long getId() {
@@ -37,12 +49,28 @@ public class Billing {
         this.patientName = patientName;
     }
 
+    public String getInvoiceNumber() {
+        return invoiceNumber;
+    }
+
+    public void setInvoiceNumber(String invoiceNumber) {
+        this.invoiceNumber = invoiceNumber;
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }
 
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
+    }
+
+    public LocalDate getBillDate() {
+        return billDate;
+    }
+
+    public void setBillDate(LocalDate billDate) {
+        this.billDate = billDate;
     }
 
     public String getStatus() {
