@@ -33,6 +33,14 @@ public class BillingService {
     public Billing createBill(Billing billing) {
         billing.setInvoiceNumber(generateInvoiceNumber());
         billing.setBillDate(LocalDate.now());
+        
+        // Calculate total amount if tax is provided
+        if (billing.getTaxAmount() != null && billing.getAmount() != null) {
+            billing.setTotalAmount(billing.getAmount().add(billing.getTaxAmount()));
+        } else if (billing.getAmount() != null) {
+            billing.setTotalAmount(billing.getAmount());
+        }
+        
         return billingRepository.save(billing);
     }
 
@@ -42,6 +50,14 @@ public class BillingService {
             return null;
         }
         billing.setId(id);
+        
+        // Recalculate total amount if amounts are updated
+        if (billing.getTaxAmount() != null && billing.getAmount() != null) {
+            billing.setTotalAmount(billing.getAmount().add(billing.getTaxAmount()));
+        } else if (billing.getAmount() != null) {
+            billing.setTotalAmount(billing.getAmount());
+        }
+        
         return billingRepository.save(billing);
     }
 

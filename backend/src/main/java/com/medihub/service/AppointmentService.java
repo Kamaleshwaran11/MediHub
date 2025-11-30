@@ -28,10 +28,18 @@ public class AppointmentService {
     public Appointment updateAppointment(Long id, Appointment updatedAppointment) {
         Appointment existing = appointmentRepository.findById(id).orElse(null);
         if (existing != null) {
-            existing.setDoctor(updatedAppointment.getDoctor());
-            existing.setPatientName(updatedAppointment.getPatientName());
-            existing.setAppointmentDate(updatedAppointment.getAppointmentDate());
-            existing.setReason(updatedAppointment.getReason());
+            if (updatedAppointment.getDoctor() != null) {
+                existing.setDoctor(updatedAppointment.getDoctor());
+            }
+            if (updatedAppointment.getPatient() != null) {
+                existing.setPatient(updatedAppointment.getPatient());
+            }
+            if (updatedAppointment.getAppointmentDate() != null) {
+                existing.setAppointmentDate(updatedAppointment.getAppointmentDate());
+            }
+            if (updatedAppointment.getReason() != null) {
+                existing.setReason(updatedAppointment.getReason());
+            }
             return appointmentRepository.save(existing);
         }
         return null;

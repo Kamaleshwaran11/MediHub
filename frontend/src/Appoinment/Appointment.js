@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let isCalendarRendered = false;
     let calendarInstance = null;
+    const API_BASE_URL = 'http://localhost:8080/api/appointments';
 
     // --- Sidebar Toggle ---
     sidebarToggle.addEventListener('click', () => {
@@ -114,6 +115,65 @@ document.addEventListener('DOMContentLoaded', function () {
     styleActiveSidebarLink();
     showSection('appointments');
 
+    // --- API Functions ---
+    async function fetchAppointments() {
+        try {
+            const response = await fetch(API_BASE_URL);
+            if (!response.ok) throw new Error('Failed to fetch appointments');
+            const appointments = await response.json();
+            return appointments.map(apt => ({
+                id: apt.id,
+                title: `Dr. ${apt.doctor?.name || 'Doctor'} - ${apt.patient?.name || 'Patient'}`,
+                start: apt.appointmentDate,
+                extendedProps: {
+                    doctorId: apt.doctor?.id,
+                    patientId: apt.patient?.id,
+                    reason: apt.reason,
+                    appointmentId: apt.id
+                },
+                backgroundColor: '#3B82F6',
+                borderColor: '#3B82F6'
+            }));
+        } catch (error) {
+            console.error('Error fetching appointments:', error);
+            Swal.fire('Error', 'Failed to load appointments', 'error');
+            return [];
+        }
+    }
+
+    async function createAppointment(appointmentData) {
+        try {
+            const response = await fetch(API_BASE_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(appointmentData)
+            });
+            if (!response.ok) {
+                const errorData = await response.json().catch(() => ({}));
+                throw new Error(errorData.message || 'Failed to create appointment');
+            }
+            return await response.json();
+        } catch (error) {
+            console.error('Error creating appointment:', error);
+            throw error;
+        }
+    }
+
+    async function deleteAppointment(appointmentId) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/${appointmentId}`, {
+                method: 'DELETE'
+            });
+            if (!response.ok) throw new Error('Failed to delete appointment');
+            return true;
+        } catch (error) {
+            console.error('Error deleting appointment:', error);
+            throw error;
+        }
+    }
+
     // --- FullCalendar ---
     function initFullCalendar() {
         const calendarEl = document.getElementById('calendar');
@@ -126,58 +186,106 @@ document.addEventListener('DOMContentLoaded', function () {
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
             },
-            editable: true,
+            editable: false,
             selectable: true,
             dayMaxEvents: true,
-            events: [
-                {
-                    title: 'Meeting with Dr. Smith',
-                    start: '2025-11-05T10:30:00',
-                    end: '2025-11-05T11:30:00',
-                    backgroundColor: '#3B82F6',
-                    borderColor: '#3B82F6'
+            events: async function(info, successCallback, failureCallback) {
+                try {
+                    const events = await fetchAppointments();
+                    successCallback(events);
+                } catch (error) {
+                    failureCallback(error);
                 }
-            ],
-            dateClick: function (info) {
-                Swal.fire({
+            },
+            dateClick: async function (info) {
+                // Fetch doctors for the dropdown
+                const doctors = await fetchDoctors();
+                const patients = await fetchPatients();
+
+                const doctorOptions = doctors.map(d => `<option value="${d.id}">${d.name}</option>`).join('');
+                const patientOptions = patients.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+
+                const result = await Swal.fire({
                     title: 'Add Appointment',
                     html: `
-                        <input id="swal-input-title" class="swal2-input" placeholder="Title">
-                        <input id="swal-input-date" type="date" class="swal2-input" value="${info.dateStr}">
+                        <div style="text-align: left;">
+                            <label>Patient:</label>
+                            <select id="swal-input-patient" class="swal2-input" style="display: block;">
+                                <option value="">Select Patient</option>
+                                ${patientOptions}
+                            </select>
+                            <label style="margin-top: 10px;">Doctor:</label>
+                            <select id="swal-input-doctor" class="swal2-input" style="display: block;">
+                                <option value="">Select Doctor</option>
+                                ${doctorOptions}
+                            </select>
+                            <label style="margin-top: 10px;">Date & Time:</label>
+                            <input id="swal-input-datetime" type="datetime-local" class="swal2-input" value="${info.dateStr}T10:00">
+                            <label style="margin-top: 10px;">Reason:</label>
+                            <input id="swal-input-reason" class="swal2-input" placeholder="Reason for appointment">
+                        </div>
                     `,
                     showCancelButton: true,
                     confirmButtonText: 'Add',
-                    preConfirm: () => ({
-                        title: document.getElementById('swal-input-title').value,
-                        date: document.getElementById('swal-input-date').value
-                    }),
                     customClass: {
                         popup: 'dark:bg-gray-800 dark:text-white'
-                    }
-                }).then((result) => {
-                    if (result.isConfirmed && result.value.title) {
-                        calendarInstance.addEvent({
-                            title: result.value.title,
-                            start: result.value.date,
-                            allDay: true,
-                            backgroundColor: '#F59E0B',
-                            borderColor: '#F59E0B'
-                        });
-                        Swal.fire('Added!', 'Appointment has been added.', 'success');
+                    },
+                    preConfirm: () => {
+                        const patientId = document.getElementById('swal-input-patient').value;
+                        const doctorId = document.getElementById('swal-input-doctor').value;
+                        const dateTime = document.getElementById('swal-input-datetime').value;
+                        const reason = document.getElementById('swal-input-reason').value;
+
+                        if (!patientId || !doctorId || !dateTime) {
+                            Swal.showValidationMessage('Please fill in all required fields');
+                            return false;
+                        }
+
+                        return {
+                            patientId,
+                            doctorId,
+                            dateTime,
+                            reason
+                        };
                     }
                 });
+
+                if (result.isConfirmed && result.value) {
+                    try {
+                        const appointmentData = {
+                            patient: { id: parseInt(result.value.patientId) },
+                            doctor: { id: parseInt(result.value.doctorId) },
+                            appointmentDate: new Date(result.value.dateTime).toISOString(),
+                            reason: result.value.reason || null
+                        };
+
+                        await createAppointment(appointmentData);
+                        Swal.fire('Success!', 'Appointment has been created.', 'success');
+                        calendarInstance.refetchEvents();
+                    } catch (error) {
+                        Swal.fire('Error', error.message || 'Failed to create appointment', 'error');
+                    }
+                }
             },
             eventClick: function (info) {
                 Swal.fire({
                     title: info.event.title,
-                    html: `<p><strong>Start:</strong> ${info.event.start.toLocaleString()}</p>`,
+                    html: `
+                        <p><strong>Start:</strong> ${new Date(info.event.start).toLocaleString()}</p>
+                        <p><strong>Reason:</strong> ${info.event.extendedProps.reason || 'N/A'}</p>
+                    `,
                     showCancelButton: true,
                     confirmButtonText: 'Delete',
                     icon: 'info'
-                }).then((result) => {
+                }).then(async (result) => {
                     if (result.isConfirmed) {
-                        info.event.remove();
-                        Swal.fire('Deleted!', 'Appointment removed.', 'success');
+                        try {
+                            await deleteAppointment(info.event.extendedProps.appointmentId);
+                            Swal.fire('Deleted!', 'Appointment removed.', 'success');
+                            calendarInstance.refetchEvents();
+                        } catch (error) {
+                            Swal.fire('Error', 'Failed to delete appointment', 'error');
+                        }
                     }
                 });
             }
@@ -186,12 +294,36 @@ document.addEventListener('DOMContentLoaded', function () {
         calendarInstance.render();
         isCalendarRendered = true;
     }
+
+    // --- Helper Functions ---
+    async function fetchDoctors() {
+        try {
+            const response = await fetch('http://localhost:8080/api/doctors');
+            if (!response.ok) return [];
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching doctors:', error);
+            return [];
+        }
+    }
+
+    async function fetchPatients() {
+        try {
+            const response = await fetch('http://localhost:8080/api/patients');
+            if (!response.ok) return [];
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching patients:', error);
+            return [];
+        }
+    }
 });
-   // Preloader with expanded duration
+
+// Preloader with expanded duration
 window.addEventListener('load', function () {
-	const preloader = document.getElementById('preloader');
-	preloader.classList.add('fade-out');
-	setTimeout(function() {
-		preloader.classList.add('hidden');
-	}, 2500); // 1500ms = 1.5s, adjust as needed
+    const preloader = document.getElementById('preloader');
+    preloader.classList.add('fade-out');
+    setTimeout(function() {
+        preloader.classList.add('hidden');
+    }, 2500); // 1500ms = 1.5s, adjust as needed
 });

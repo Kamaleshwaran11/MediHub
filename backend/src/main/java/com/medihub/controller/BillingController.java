@@ -1,63 +1,107 @@
 package com.medihub.controller;
 
 import com.medihub.model.Billing;
+import com.medihub.model.Patient;
 import com.medihub.service.BillingService;
+import com.medihub.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/billing")
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class BillingController {
 
     @Autowired
     private BillingService billingService;
 
-    // Get all bills
+    @Autowired
+    private PatientRepository patientRepository;
+
     @GetMapping
     public ResponseEntity<List<Billing>> getAllBills() {
-        return ResponseEntity.ok(billingService.getAllBills());
+        try {
+            List<Billing> bills = billingService.getAllBills();
+            return ResponseEntity.ok(bills);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-    // Get bill by id
     @GetMapping("/{id}")
     public ResponseEntity<Billing> getBillById(@PathVariable Long id) {
-        Billing bill = billingService.getBillById(id);
-        return bill != null ? ResponseEntity.ok(bill) : ResponseEntity.notFound().build();
+        try {
+            Billing bill = billingService.getBillById(id);
+            return bill != null ? ResponseEntity.ok(bill) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-    // Search bills by patient name
     @GetMapping("/search")
     public ResponseEntity<List<Billing>> searchBills(@RequestParam String patientName) {
-        return ResponseEntity.ok(billingService.searchBillsByPatientName(patientName));
+        try {
+            List<Billing> results = billingService.searchBillsByPatientName(patientName);
+            return ResponseEntity.ok(results);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-    // Get bills by status
     @GetMapping("/status/{status}")
     public ResponseEntity<List<Billing>> getBillsByStatus(@PathVariable String status) {
-        return ResponseEntity.ok(billingService.getBillsByStatus(status));
+        try {
+            List<Billing> results = billingService.getBillsByStatus(status);
+            return ResponseEntity.ok(results);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-    // Create new bill
     @PostMapping
     public ResponseEntity<Billing> createBill(@RequestBody Billing billing) {
-        return ResponseEntity.ok(billingService.createBill(billing));
+        try {
+            if (billing.getPatient() == null || billing.getPatient().getId() == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
+            if (billing.getAmount() == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            }
+            
+            // Validate that patient exists
+            Patient patient = patientRepository.findById(billing.getPatient().getId()).orElse(null);
+            if (patient == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            
+            Billing created = billingService.createBill(billing);
+            return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-    // Update bill
     @PutMapping("/{id}")
     public ResponseEntity<Billing> updateBill(@PathVariable Long id, @RequestBody Billing billing) {
-        Billing updated = billingService.updateBill(id, billing);
-        return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.notFound().build();
+        try {
+            Billing updated = billingService.updateBill(id, billing);
+            return updated != null ? ResponseEntity.ok(updated) : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
-    // Delete bill
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBill(@PathVariable Long id) {
-        return billingService.deleteBill(id) 
-            ? ResponseEntity.noContent().build()
-            : ResponseEntity.notFound().build();
+        try {
+            boolean deleted = billingService.deleteBill(id);
+            return deleted ? ResponseEntity.noContent().build() : ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }
+

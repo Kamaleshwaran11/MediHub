@@ -11,12 +11,13 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
 
-    @Column(name = "patient_name", nullable = false)
-    private String patientName;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "patient_id", nullable = false)
+    private Patient patient;
 
     @Column(name = "appointment_date", nullable = false)
     private LocalDateTime appointmentDate;
@@ -41,12 +42,16 @@ public class Appointment {
         this.doctor = doctor;
     }
 
-    public String getPatientName() {
-        return patientName;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setPatientName(String patientName) {
-        this.patientName = patientName;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public String getPatientName() {
+        return patient != null ? patient.getName() : "N/A";
     }
 
     public LocalDateTime getAppointmentDate() {

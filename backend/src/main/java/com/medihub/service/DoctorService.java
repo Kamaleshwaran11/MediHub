@@ -33,6 +33,8 @@ public class DoctorService {
             existing.setPhone(updatedDoctor.getPhone());
             existing.setEmail(updatedDoctor.getEmail());
             existing.setPassword(updatedDoctor.getPassword());
+            existing.setLocation(updatedDoctor.getLocation());
+            existing.setExperience(updatedDoctor.getExperience());
             return doctorRepository.save(existing);
         }
         return null;

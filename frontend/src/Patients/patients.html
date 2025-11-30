@@ -1,29 +1,163 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Patients - MediHub</title>
-  <link rel="stylesheet" href="patients.css">
+    <meta charset="utf-8">
+    <title>PATIENT MANAGEMENT - MEDIHUB</title>
+    <link rel="icon" type="image/png" href="../../img/logotitle.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom -->
+    <link href="patients.css" rel="stylesheet">
 </head>
 <body>
-  <div class="container">
-    <h1>Patients</h1>
-    <form id="patientForm">
-      <input type="hidden" id="patientId">
-      <label>Name: <input id="name" required></label>
-      <label>Age: <input id="age" type="number" required></label>
-      <label>Gender: <input id="gender"></label>
-      <label>Phone: <input id="phone"></label>
-      <button type="submit">Save</button>
-      <button type="button" id="cancel">Cancel</button>
-    </form>
 
-    <h2>All Patients</h2>
-    <table id="patientsTable">
-      <thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Gender</th><th>Phone</th><th>Actions</th></tr></thead>
-      <tbody></tbody>
-    </table>
-  </div>
-  <script src="patients.js"></script>
+<!-- -------------------------------------------------- -->
+<!-- NAVBAR -->
+<!-- -------------------------------------------------- -->
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3">
+    <a href="../../index.html" class="navbar-brand p-0 d-flex align-items-center">
+        <img src="../../img/logotitle.png" style="height:40px;" class="me-2">
+        <h1 class="m-0 text-primary">MEDIHUB</h1>
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto">
+            <a href="../../index.html" class="nav-item nav-link">Home</a>
+            <a href="../../about.html" class="nav-item nav-link">About</a>
+            <a href="../Doctors/doctors.html" class="nav-item nav-link">Doctors</a>
+            <a href="patients.html" class="nav-item nav-link active">Patients</a>
+            <a href="../Appoinment/Appointment.html" class="nav-item nav-link">Appointments</a>
+            <a href="../Staff/staff.html" class="nav-item nav-link">Staff</a>
+            <a href="../Pharmacy/Pharmacy.html" class="nav-item nav-link">Pharmacy</a>
+            <a href="../Billings/billing.html" class="nav-item nav-link">Billing</a>
+            <a href="../../contact.html" class="nav-item nav-link">Contact</a>
+            <a href="../../dashboard.html" class="nav-item nav-link">Dashboard</a>
+        </div>
+    </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="container-fluid bg-primary py-5">
+    <h1 class="text-center text-white">Patients</h1>
+</div>
+
+<!-- Buttons -->
+<div class="text-center mt-4">
+    <button class="btn btn-success" id="openAddPatientBtn">Add Patient</button>
+    <button class="btn btn-primary" id="refreshBtn">Refresh List</button>
+</div>
+
+<!-- SEARCH BAR -->
+<div class="container mt-4">
+    <input id="searchInput" type="text" class="form-control" placeholder="Search by name, phone, or gender..." onkeyup="filterPatients()">
+</div>
+
+<!-- PATIENT CARDS -->
+<div class="container mt-4">
+    <div id="patientList" class="row gy-4"></div>
+</div>
+
+<!-- -------------------------------------------------- -->
+<!-- ADD PATIENT POPUP -->
+<!-- -------------------------------------------------- -->
+<div id="addPatientPopupOverlay" class="popup-overlay" style="display:none;"></div>
+
+<div id="addPatientPopupWindow" class="popup-window" style="display:none; max-width:600px;">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Add Patient</h4>
+        </div>
+        <div class="card-body">
+            <form id="addPatientForm">
+                <div class="mb-3">
+                    <label class="form-label">Name *</label>
+                    <input id="patientName" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Age *</label>
+                    <input id="patientAge" class="form-control" type="number" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Gender *</label>
+                    <select id="patientGender" class="form-control" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone *</label>
+                    <input id="patientPhone" class="form-control" required>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Add Patient</button>
+                <button type="button" id="closeAddPatientBtn" class="btn btn-secondary">Close</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- -------------------------------------------------- -->
+<!-- EDIT PATIENT POPUP -->
+<!-- -------------------------------------------------- -->
+<div id="editPatientPopupOverlay" class="popup-overlay" style="display:none;"></div>
+
+<div id="editPatientPopupWindow" class="popup-window" style="display:none; max-width:600px;">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Edit Patient</h4>
+        </div>
+        <div class="card-body">
+            <form id="editPatientForm">
+                <div class="mb-3">
+                    <label class="form-label">Name *</label>
+                    <input id="editPatientName" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Age *</label>
+                    <input id="editPatientAge" class="form-control" type="number" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Gender *</label>
+                    <select id="editPatientGender" class="form-control" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone *</label>
+                    <input id="editPatientPhone" class="form-control" required>
+                </div>
+
+                <button class="btn btn-primary" type="submit">Update Patient</button>
+                <button type="button" id="closeEditPatientBtn" class="btn btn-secondary">Close</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- -------------------------------------------------- -->
+<!-- SCRIPTS -->
+<!-- -------------------------------------------------- -->
+<script src="../../js/bootstrap.bundle.min.js"></script>
+<script src="patients.js"></script>
+
 </body>
 </html>

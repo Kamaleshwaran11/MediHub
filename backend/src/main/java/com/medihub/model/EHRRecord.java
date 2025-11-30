@@ -11,11 +11,13 @@ public class EHRRecord {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "patient_name", nullable = false)
-    private String patientName;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "patient_id", nullable = false)
+    private Patient patient;
 
-    @Column(name = "doctor_name", nullable = false)
-    private String doctorName;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "doctor_id", nullable = false)
+    private Doctor doctor;
 
     @Column(name = "visit_date", nullable = false)
     private LocalDate visitDate;
@@ -35,20 +37,28 @@ public class EHRRecord {
         this.id = id;
     }
 
-    public String getPatientName() {
-        return patientName;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setPatientName(String patientName) {
-        this.patientName = patientName;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public Doctor getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
+    }
+
+    public String getPatientName() {
+        return patient != null ? patient.getName() : "N/A";
     }
 
     public String getDoctorName() {
-        return doctorName;
-    }
-
-    public void setDoctorName(String doctorName) {
-        this.doctorName = doctorName;
+        return doctor != null ? doctor.getName() : "N/A";
     }
 
     public LocalDate getVisitDate() {

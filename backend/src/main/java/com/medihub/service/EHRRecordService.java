@@ -28,11 +28,21 @@ public class EHRRecordService {
     public EHRRecord updateEHRRecord(Long id, EHRRecord updatedEHRRecord) {
         EHRRecord existing = ehrRecordRepository.findById(id).orElse(null);
         if (existing != null) {
-            existing.setPatientName(updatedEHRRecord.getPatientName());
-            existing.setDoctorName(updatedEHRRecord.getDoctorName());
-            existing.setVisitDate(updatedEHRRecord.getVisitDate());
-            existing.setDiagnosis(updatedEHRRecord.getDiagnosis());
-            existing.setTreatment(updatedEHRRecord.getTreatment());
+            if (updatedEHRRecord.getPatient() != null) {
+                existing.setPatient(updatedEHRRecord.getPatient());
+            }
+            if (updatedEHRRecord.getDoctor() != null) {
+                existing.setDoctor(updatedEHRRecord.getDoctor());
+            }
+            if (updatedEHRRecord.getVisitDate() != null) {
+                existing.setVisitDate(updatedEHRRecord.getVisitDate());
+            }
+            if (updatedEHRRecord.getDiagnosis() != null) {
+                existing.setDiagnosis(updatedEHRRecord.getDiagnosis());
+            }
+            if (updatedEHRRecord.getTreatment() != null) {
+                existing.setTreatment(updatedEHRRecord.getTreatment());
+            }
             return ehrRecordRepository.save(existing);
         }
         return null;

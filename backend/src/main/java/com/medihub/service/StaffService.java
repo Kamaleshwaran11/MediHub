@@ -32,6 +32,12 @@ public class StaffService {
             existing.setRole(updatedStaff.getRole());
             existing.setEmail(updatedStaff.getEmail());
             existing.setPhone(updatedStaff.getPhone());
+            existing.setDepartment(updatedStaff.getDepartment());
+            existing.setQualification(updatedStaff.getQualification());
+            existing.setLicenseNumber(updatedStaff.getLicenseNumber());
+            existing.setExperienceYears(updatedStaff.getExperienceYears());
+            existing.setShift(updatedStaff.getShift());
+            existing.setSpecialization(updatedStaff.getSpecialization());
             return staffRepository.save(existing);
         }
         return null;

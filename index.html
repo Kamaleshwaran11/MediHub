@@ -32,6 +32,33 @@
 
     <!-- Template Stylesheet -->
     <link href="frontend/css/style.css" rel="stylesheet">
+    
+    <style>
+        .service-link {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        .service-link:hover .service-item {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .service-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .stat-item {
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.2);
+        }
+    </style>
 </head>
 
 <body>
@@ -92,7 +119,7 @@ window.addEventListener('load', function () {
                 <a href="frontend/src/Pharmacy/pharmacy.html" class="nav-item nav-link">Pharmacy</a>
                 <a href="frontend/src/Billings/billing.html" class="nav-item nav-link">Billing & Invoices</a>
                 <a href="frontend/src/EHR/ehr.html" class="nav-item nav-link">EHR</a>
-                <a href="frontend/Dashboards/dashboard.html" class="nav-item nav-link">Dashboard & Reports</a>
+                <a href="frontend/src/Dashboards/dashboard.html" class="nav-item nav-link">Dashboard & Reports</a>
                 <a href="frontend/contact.html" class="nav-item nav-link">Contact</a>
             </div>
             <a href="http://localhost:8080/login" class="btn btn-primary py-2 px-4 ms-3">Login/Register</a>
@@ -107,7 +134,7 @@ window.addEventListener('load', function () {
                 <div class="col-lg-10 text-center">
                     <h1 class="display-3 mb-3" style="color:black;">Welcome to MediHub</h1>
                     <p class="fs-5 mb-4" style="color: #222;">Your one-stop solution for all healthcare needs. Book appointments, consult doctors, and access medical records seamlessly.</p>
-                    <a href="http://localhost:8080/api/appointments" class="btn btn-light py-2 px-4">Book Appointment</a>
+                    <a href="frontend/src/Appoinment/Appointment.html" class="btn btn-light py-2 px-4">Book Appointment</a>
                 </div>
             </div>
         </div>
@@ -117,69 +144,135 @@ window.addEventListener('load', function () {
     <!-- Services Section Start -->
     <div class="container py-5">
         <div class="text-center mb-5">
-            <h2 class="text-primary">Our Services</h2>
-            <p>Explore the wide range of healthcare services we offer to cater to your needs.</p>
+            <h2 class="text-primary">Our Modules & Services</h2>
+            <p>Comprehensive healthcare management solutions tailored for modern medical practice</p>
         </div>
         <div class="row g-4">
+            <!-- Doctors Module -->
             <div class="col-lg-3 col-md-6">
-                <div class="service-item bg-light text-center p-4">
-                    <i class="fa fa-user-md fa-3x text-primary mb-3"></i>
-                    <h5>Expert Doctors</h5>
-                    <p>Consult with experienced and specialized doctors across various fields.</p>
-                </div>
+                <a href="frontend/src/Doctors/doctors.html" class="service-link">
+                    <div class="service-item bg-light text-center p-4 h-100">
+                        <i class="fa fa-user-md fa-3x text-primary mb-3"></i>
+                        <h5>Doctors Management</h5>
+                        <p>Register, manage, and organize doctor profiles with specializations, qualifications, and availability schedules.</p>
+                        <small class="text-muted d-block mt-3">View • Add • Edit • Delete</small>
+                    </div>
+                </a>
             </div>
+            <!-- Patients Module -->
             <div class="col-lg-3 col-md-6">
-                <div class="service-item bg-light text-center p-4">
-                    <i class="fa fa-users fa-3x text-primary mb-3"></i>
-                    <h5>Patients Management</h5>
-                    <p>Efficiently manage patient records, appointments, and communication.</p>
-                </div>
+                <a href="frontend/src/Patients/patients.html" class="service-link">
+                    <div class="service-item bg-light text-center p-4 h-100">
+                        <i class="fa fa-users fa-3x text-primary mb-3"></i>
+                        <h5>Patients Management</h5>
+                        <p>Manage patient demographic information, medical history, contact details, and emergency contacts efficiently.</p>
+                        <small class="text-muted d-block mt-3">View • Add • Edit • Delete</small>
+                    </div>
+                </a>
             </div>
+            <!-- Appointments Module -->
             <div class="col-lg-3 col-md-6">
-                <div class="service-item bg-light text-center p-4">
-                    <i class="fa fa-calendar-check fa-3x text-primary mb-3"></i>
-                    <h5>Appointments</h5>
-                    <p>Book, view, and manage appointments with ease.</p>
-                </div>
+                <a href="frontend/src/Appoinment/Appointment.html" class="service-link">
+                    <div class="service-item bg-light text-center p-4 h-100">
+                        <i class="fa fa-calendar-check fa-3x text-primary mb-3"></i>
+                        <h5>Appointments Scheduling</h5>
+                        <p>Schedule appointments with interactive calendar, track appointment status, and manage doctor availability slots.</p>
+                        <small class="text-muted d-block mt-3">Calendar View • Book • Reschedule • Cancel</small>
+                    </div>
+                </a>
             </div>
+            <!-- Dashboard Module -->
             <div class="col-lg-3 col-md-6">
-                <div class="service-item bg-light text-center p-4">
-                    <i class="fa fa-chart-bar fa-3x text-primary mb-3"></i>
-                    <h5>Dashboard & Reports</h5>
-                    <p>Get insights and analytics with comprehensive dashboards and reports.</p>
-                </div>
+                <a href="frontend/src/Dashboards/dashboard.html" class="service-link">
+                    <div class="service-item bg-light text-center p-4 h-100">
+                        <i class="fa fa-chart-bar fa-3x text-primary mb-3"></i>
+                        <h5>Dashboard & Reports</h5>
+                        <p>Monitor key metrics with real-time analytics, generate comprehensive reports, and track system performance.</p>
+                        <small class="text-muted d-block mt-3">Analytics • Charts • Reports • Insights</small>
+                    </div>
+                </a>
             </div>
+            <!-- Staff Module -->
             <div class="col-lg-3 col-md-6">
-                <div class="service-item bg-light text-center p-4">
-                    <i class="fa fa-user-nurse fa-3x text-primary mb-3"></i>
-                    <h5>Staff Management</h5>
-                    <p>Organize and manage healthcare staff efficiently.</p>
-                </div>
+                <a href="frontend/src/Staff/staff.html" class="service-link">
+                    <div class="service-item bg-light text-center p-4 h-100">
+                        <i class="fa fa-user-nurse fa-3x text-primary mb-3"></i>
+                        <h5>Staff Management</h5>
+                        <p>Manage hospital staff profiles including nurses, administrators, and support personnel with role-based access control.</p>
+                        <small class="text-muted d-block mt-3">View • Assign • Track • Manage Roles</small>
+                    </div>
+                </a>
             </div>
+            <!-- Pharmacy Module -->
             <div class="col-lg-3 col-md-6">
-                <div class="service-item bg-light text-center p-4">
-                    <i class="fa fa-pills fa-3x text-primary mb-3"></i>
-                    <h5>Pharmacy</h5>
-                    <p>Order medicines online and get them delivered to your doorstep.</p>
-                </div>
+                <a href="frontend/src/Pharmacy/pharmacy.html" class="service-link">
+                    <div class="service-item bg-light text-center p-4 h-100">
+                        <i class="fa fa-pills fa-3x text-primary mb-3"></i>
+                        <h5>Pharmacy Management</h5>
+                        <p>Track medicine inventory, manage prescriptions, handle pharmacy orders, and monitor medication distribution.</p>
+                        <small class="text-muted d-block mt-3">Inventory • Orders • Prescriptions • Stock</small>
+                    </div>
+                </a>
             </div>
+            <!-- Billing Module -->
             <div class="col-lg-3 col-md-6">
-                <div class="service-item bg-light text-center p-4">
-                    <i class="fa fa-file-invoice-dollar fa-3x text-primary mb-3"></i>
-                    <h5>Billing & Invoices</h5>
-                    <p>Easy billing and invoice management for all services.</p>
-                </div>
+                <a href="frontend/src/Billings/billing.html" class="service-link">
+                    <div class="service-item bg-light text-center p-4 h-100">
+                        <i class="fa fa-file-invoice-dollar fa-3x text-primary mb-3"></i>
+                        <h5>Billing & Invoices</h5>
+                        <p>Generate invoices, track payments, manage billing records, and handle insurance claims with detailed reporting.</p>
+                        <small class="text-muted d-block mt-3">Invoices • Payments • Reports • Claims</small>
+                    </div>
+                </a>
             </div>
+            <!-- EHR Module -->
             <div class="col-lg-3 col-md-6">
-                <div class="service-item bg-light text-center p-4">
-                    <i class="fa fa-notes-medical fa-3x text-primary mb-3"></i>
-                    <h5>EHR</h5>
-                    <p>Access and manage your electronic health records securely.</p>
-                </div>
+                <a href="frontend/src/EHR/ehr.html" class="service-link">
+                    <div class="service-item bg-light text-center p-4 h-100">
+                        <i class="fa fa-notes-medical fa-3x text-primary mb-3"></i>
+                        <h5>Electronic Health Records</h5>
+                        <p>Maintain comprehensive patient medical history, diagnoses, treatments, and prescriptions in a secure digital format.</p>
+                        <small class="text-muted d-block mt-3">Records • History • Diagnoses • Prescriptions</small>
+                    </div>
+                </a>
             </div>
             
         </div>
     </div>
+     <!-- Statistics Section Start -->
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="text-primary">Platform Statistics</h2>
+            <p>Real-time insights from our healthcare management system.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-item bg-light text-center p-4 rounded">
+                    <h6 class="text-muted">Total Doctors</h6>
+                    <h3 class="text-primary" id="stat-doctors">0</h3>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-item bg-light text-center p-4 rounded">
+                    <h6 class="text-muted">Total Patients</h6>
+                    <h3 class="text-primary" id="stat-patients">0</h3>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-item bg-light text-center p-4 rounded">
+                    <h6 class="text-muted">Total Appointments</h6>
+                    <h3 class="text-primary" id="stat-appointments">0</h3>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="stat-item bg-light text-center p-4 rounded">
+                    <h6 class="text-muted">Staff Members</h6>
+                    <h3 class="text-primary" id="stat-staff">0</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Statistics Section End -->
      <!-- About Start -->
       <section id="about-us" class="about">
     <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
@@ -197,7 +290,7 @@ window.addEventListener('load', function () {
                         <li>Prescription and billing management</li>
                         <li>Health updates and reminders</li>
                     </ul>
-                    <a href="appointment.html" class="btn btn-primary py-3 px-5 mt-4">Make Appointment</a>
+                    <a href="frontend/src/Appoinment/Appointment.html" class="btn btn-primary py-3 px-5 mt-4">Make Appointment</a>
                 </div>
                 <div class="col-lg-5" style="min-height: 500px;">
                     <div class="position-relative h-100">
@@ -208,6 +301,221 @@ window.addEventListener('load', function () {
         </div>
     </div></section>
     <!-- Services Section End -->
+
+    <!-- Resume/Portfolio Section Start -->
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h2 class="text-primary">MediHub Project Overview</h2>
+            <p class="lead">A comprehensive demonstration of full-stack healthcare management system development</p>
+        </div>
+        
+        <div class="row g-4">
+            <!-- Project Summary -->
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body p-5">
+                        <h5 class="card-title text-primary mb-3">Project: MediHub - Healthcare Management System</h5>
+                        <p class="card-text"><strong>Description:</strong> A full-stack web application designed to streamline healthcare operations, manage patient records, schedule appointments, and facilitate billing and electronic health records management.</p>
+                        
+                        <hr>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <h6 class="text-primary mb-3">Frontend Technologies</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> HTML5, CSS3, JavaScript (ES6+)</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Bootstrap 5 - Responsive Design</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Tailwind CSS - Utility-First Styling</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> FullCalendar - Event Management</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> DataTables - Data Visualization</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> SweetAlert2 - User Notifications</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Chart.js - Analytics & Reports</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-primary mb-3">Backend Technologies</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Java 21 - Backend Language</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Spring Boot 3.x - Framework</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Spring Data JPA - ORM</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Jakarta EE 10 - Enterprise Features</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> MySQL/PostgreSQL - Database</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Maven - Build Automation</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> RESTful API Architecture</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <h6 class="text-primary mb-3">Key Features Implemented</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Doctor Management System</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Patient Record Management</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Appointment Scheduling Calendar</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Electronic Health Records (EHR)</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Billing & Invoice Management</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Staff Management System</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-primary mb-3">Development Skills Demonstrated</h6>
+                                <ul class="list-unstyled">
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Full-Stack Development</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Database Design & Optimization</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> RESTful API Design</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Responsive Web Design</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> API Integration & Testing</li>
+                                    <li><i class="bi bi-check-circle text-success me-2"></i> Version Control (Git)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="row mt-4">
+                            <div class="col-lg-4">
+                                <div class="bg-light p-3 rounded text-center">
+                                    <h6 class="text-primary mb-2">Modules</h6>
+                                    <p class="mb-0"><strong class="h4 text-success">8</strong></p>
+                                    <small class="text-muted">Complete Modules</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="bg-light p-3 rounded text-center">
+                                    <h6 class="text-primary mb-2">API Endpoints</h6>
+                                    <p class="mb-0"><strong class="h4 text-success">34+</strong></p>
+                                    <small class="text-muted">RESTful Endpoints</small>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="bg-light p-3 rounded text-center">
+                                    <h6 class="text-primary mb-2">Architecture</h6>
+                                    <p class="mb-0"><strong class="h4 text-success">MVC</strong></p>
+                                    <small class="text-muted">Model-View-Controller</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5">
+                            <h6 class="text-primary mb-3">Database Schema</h6>
+                            <p class="text-muted small"><strong>Entities:</strong> Users, Doctors, Patients, Appointments, Staff, Pharmacy, Billings, EHRRecords, and supporting tables</p>
+                            <p class="text-muted small"><strong>Relationships:</strong> Many-to-One, One-to-Many relationships with proper foreign keys and constraints for data integrity</p>
+                        </div>
+
+                        <div class="mt-4">
+                            <h6 class="text-primary mb-3">Project Highlights</h6>
+                            <ul>
+                                <li><strong>Responsive Design:</strong> Mobile-first approach with Bootstrap and Tailwind CSS for seamless experience on all devices</li>
+                                <li><strong>Real-time Updates:</strong> Interactive calendar, live statistics, and instant data synchronization</li>
+                                <li><strong>Data Security:</strong> Proper entity relationships, input validation, and secure API endpoints</li>
+                                <li><strong>Code Quality:</strong> Clean code architecture, proper separation of concerns (Controllers, Services, Repositories)</li>
+                                <li><strong>User Experience:</strong> Intuitive UI with alerts, notifications, and smooth animations</li>
+                                <li><strong>Scalability:</strong> Modular design allowing easy addition of new features and modules</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Skills Summary -->
+        <div class="row g-4 mt-5">
+            <div class="col-lg-6">
+                <div class="card border-0 shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0">Core Competencies</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="skill-item mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Java & Spring Boot</span>
+                                <span class="badge bg-primary">95%</span>
+                            </div>
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Full-Stack Web Development</span>
+                                <span class="badge bg-primary">90%</span>
+                            </div>
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>RESTful API Design</span>
+                                <span class="badge bg-primary">88%</span>
+                            </div>
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Database Design (SQL)</span>
+                                <span class="badge bg-primary">85%</span>
+                            </div>
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card border-0 shadow">
+                    <div class="card-header bg-success text-white">
+                        <h6 class="mb-0">Professional Skills</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="skill-item mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Frontend Development (HTML/CSS/JS)</span>
+                                <span class="badge bg-success">92%</span>
+                            </div>
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar bg-success" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Problem Solving & Debugging</span>
+                                <span class="badge bg-success">88%</span>
+                            </div>
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar bg-success" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item mb-3">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Git & Version Control</span>
+                                <span class="badge bg-success">90%</span>
+                            </div>
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar bg-success" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>System Design & Architecture</span>
+                                <span class="badge bg-success">85%</span>
+                            </div>
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar bg-success" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Resume/Portfolio Section End -->
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light py-5 wow fadeInUp" data-wow-delay="0.3s" style="margin-top: -75px;">
@@ -258,5 +566,50 @@ window.addEventListener('load', function () {
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!-- Index Page Statistics Script -->
+    <script>
+        const API_BASE_URL = 'http://localhost:8080/api';
+
+        // Fetch statistics on page load
+        document.addEventListener('DOMContentLoaded', async function () {
+            try {
+                // Fetch doctors count
+                const doctorsResponse = await fetch(`${API_BASE_URL}/doctors`);
+                if (doctorsResponse.ok) {
+                    const doctors = await doctorsResponse.json();
+                    document.getElementById('stat-doctors').textContent = doctors.length;
+                }
+
+                // Fetch patients count
+                const patientsResponse = await fetch(`${API_BASE_URL}/patients`);
+                if (patientsResponse.ok) {
+                    const patients = await patientsResponse.json();
+                    document.getElementById('stat-patients').textContent = patients.length;
+                }
+
+                // Fetch appointments count
+                const appointmentsResponse = await fetch(`${API_BASE_URL}/appointments`);
+                if (appointmentsResponse.ok) {
+                    const appointments = await appointmentsResponse.json();
+                    document.getElementById('stat-appointments').textContent = appointments.length;
+                }
+
+                // Fetch staff count
+                const staffResponse = await fetch(`${API_BASE_URL}/staff`);
+                if (staffResponse.ok) {
+                    const staff = await staffResponse.json();
+                    document.getElementById('stat-staff').textContent = staff.length;
+                }
+            } catch (error) {
+                console.error('Error fetching statistics:', error);
+                // Set default values if backend is not available
+                document.getElementById('stat-doctors').textContent = '-';
+                document.getElementById('stat-patients').textContent = '-';
+                document.getElementById('stat-appointments').textContent = '-';
+                document.getElementById('stat-staff').textContent = '-';
+            }
+        });
+    </script>
 </body>
 </html>
