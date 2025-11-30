@@ -2,7 +2,7 @@
 
 ## 📋 Overview
 
-**MediHub** is a comprehensive, full-stack **Healthcare Management System** designed to streamline hospital and clinic operations. Built with modern technologies, it provides integrated solutions for managing doctors, patients, appointments, billing, electronic health records, staff, and pharmacy operations all in one centralized platform.
+**MediHub** is a comprehensive, full-stack **Healthcare Platform** designed to streamline healthcare facility operations. Built with modern technologies, it provides integrated solutions for managing doctors, patients, appointments, billing, electronic health records, staff, and pharmacy operations all in one centralized platform.
 
 ### 🎯 Key Objectives
 - ✅ Centralize healthcare data management
