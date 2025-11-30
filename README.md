@@ -39,6 +39,7 @@ CREATE DATABASE medihub_db;
 USE medihub_db;
 ```
 
+
 Edit `backend/src/main/resources/application.properties`:
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/medihub_db
