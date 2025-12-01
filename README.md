@@ -1,4 +1,4 @@
-# MediHub - Healthcare Management System
+# MediHub - Healthcare Platform
 
 ## 📋 Overview
 
