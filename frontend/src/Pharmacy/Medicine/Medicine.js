@@ -1,5 +1,5 @@
 async function loadMedicines(page=0) {
-    let res = await fetch(`http://localhost:8080/api/medicines?page=${page}&size=1000`);
+    let res = await fetch(`http://localhost:8081/api/medicines?page=${page}&size=1000`);
     let data = await res.json();
     let grid = document.querySelector("#medicineGrid");
     grid.innerHTML = "";
@@ -23,7 +23,7 @@ async function loadMedicines(page=0) {
 async function searchMedicines() {
     let keyword = document.getElementById("searchBox").value;
     if(keyword.length < 2) return;
-    let res = await fetch(`http://localhost:8080/api/medicines/search?keyword=${keyword}`);
+    let res = await fetch(`http://localhost:8081/api/medicines/search?keyword=${keyword}`);
     let data = await res.json();
     let grid = document.querySelector("#medicineGrid");
     grid.innerHTML = "";

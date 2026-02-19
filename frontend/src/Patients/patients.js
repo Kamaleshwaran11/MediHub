@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/api/patients";
+const API_URL = "http://localhost:8081/api/patients";
 let patients = [];
 let currentEditingPatientId = null;
 

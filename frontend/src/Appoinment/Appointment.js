@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     let isCalendarRendered = false;
     let calendarInstance = null;
-    const API_BASE_URL = 'http://localhost:8080/api/appointments';
+    const API_BASE_URL = 'http://localhost:8081/api/appointments';
 
     // --- Sidebar Toggle ---
     sidebarToggle.addEventListener('click', () => {
@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // --- Helper Functions ---
     async function fetchDoctors() {
         try {
-            const response = await fetch('http://localhost:8080/api/doctors');
+            const response = await fetch('http://localhost:8081/api/doctors');
             if (!response.ok) return [];
             return await response.json();
         } catch (error) {
@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     async function fetchPatients() {
         try {
-            const response = await fetch('http://localhost:8080/api/patients');
+            const response = await fetch('http://localhost:8081/api/patients');
             if (!response.ok) return [];
             return await response.json();
         } catch (error) {

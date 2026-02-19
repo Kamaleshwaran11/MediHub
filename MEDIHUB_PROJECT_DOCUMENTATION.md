@@ -107,7 +107,7 @@ Frontend (Static Files)
   └─ index.html, CSS, JS files served via HTTP
 
 Backend (Spring Boot Application)
-  └─ Runs on http://localhost:8080
+  └─ Runs on http://localhost:8081
   └─ Exposes REST APIs at /api/* endpoints
 
 Database Server
@@ -236,7 +236,7 @@ Database Server
 **Technical Implementation:**
 ```javascript
 // FullCalendar Integration
-const API_BASE_URL = 'http://localhost:8080/api/appointments';
+const API_BASE_URL = 'http://localhost:8081/api/appointments';
 
 // Fetch appointments from backend
 async function fetchAppointments() {
@@ -469,10 +469,10 @@ public Billing createBilling(Billing billing) {
 // Frontend Dashboard Stats Fetching
 async function loadDashboardStats() {
   try {
-    const doctorsRes = await fetch('http://localhost:8080/api/doctors');
-    const patientsRes = await fetch('http://localhost:8080/api/patients');
-    const appointmentsRes = await fetch('http://localhost:8080/api/appointments');
-    const staffRes = await fetch('http://localhost:8080/api/staff');
+    const doctorsRes = await fetch('http://localhost:8081/api/doctors');
+    const patientsRes = await fetch('http://localhost:8081/api/patients');
+    const appointmentsRes = await fetch('http://localhost:8081/api/appointments');
+    const staffRes = await fetch('http://localhost:8081/api/staff');
     
     const doctors = await doctorsRes.json();
     const patients = await patientsRes.json();
@@ -679,7 +679,7 @@ CREATE TABLE pharmacy (
 
 ### Base URL
 ```
-http://localhost:8080/api
+http://localhost:8081/api
 ```
 
 ### API Overview
@@ -971,7 +971,7 @@ All API endpoints follow standard HTTP status codes:
 ```javascript
 // Appointment.js - Key Implementation
 
-const API_BASE_URL = 'http://localhost:8080/api/appointments';
+const API_BASE_URL = 'http://localhost:8081/api/appointments';
 
 // Fetch appointments from backend with proper error handling
 async function fetchAppointments() {
@@ -1113,7 +1113,7 @@ spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
 
 # Server Configuration
-server.port=8080
+server.port=8081
 server.servlet.context-path=/
 ```
 
@@ -1135,7 +1135,7 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-Backend will start at: `http://localhost:8080`
+Backend will start at: `http://localhost:8081`
 
 ### Frontend Setup
 
@@ -1158,7 +1158,7 @@ npx http-server
 #### 3. Access Application
 ```
 http://localhost:8000 (if using Python server)
-http://localhost:8080 (if using backend's static files)
+http://localhost:8081 (if using backend's static files)
 ```
 
 ### Database Setup Script

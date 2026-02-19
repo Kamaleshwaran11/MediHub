@@ -76,7 +76,7 @@ mvn clean install
 mvn spring-boot:run
 ```
 
-Backend will start at: **http://localhost:8080**
+Backend will start at: **http://localhost:8081**
 
 ### Step 4: Run Frontend
 ```bash
@@ -95,7 +95,7 @@ Open index.html in your browser
 ### Step 5: Access Application
 ```
 http://localhost:8000 (if using Python server)
-http://localhost:8080 (if backend serves frontend)
+http://localhost:8081 (if backend serves frontend)
 ```
 
 ---
@@ -436,7 +436,7 @@ http://localhost:8080 (if backend serves frontend)
 
 ### Base URL
 ```
-http://localhost:8080/api
+http://localhost:8081/api
 ```
 
 ### Authentication
@@ -510,7 +510,7 @@ DELETE /api/pharmacy/{id}              - Delete medicine
 
 **Create Patient:**
 ```bash
-curl -X POST http://localhost:8080/api/patients \
+curl -X POST http://localhost:8081/api/patients \
   -H "Content-Type: application/json" \
   -d '{
     "name": "John Doe",
@@ -523,7 +523,7 @@ curl -X POST http://localhost:8080/api/patients \
 
 **Create Bill:**
 ```bash
-curl -X POST http://localhost:8080/api/billings \
+curl -X POST http://localhost:8081/api/billings \
   -H "Content-Type: application/json" \
   -d '{
     "patientId": 1,
@@ -534,7 +534,7 @@ curl -X POST http://localhost:8080/api/billings \
 
 **Get All Appointments:**
 ```bash
-curl http://localhost:8080/api/appointments
+curl http://localhost:8081/api/appointments
 ```
 
 ---
@@ -653,7 +653,7 @@ MediHub/
 
 ### Frontend Not Loading Data
 1. **Check backend is running:**
-   - Visit http://localhost:8080/api/doctors
+   - Visit http://localhost:8081/api/doctors
    - Should return JSON data
 
 2. **Check browser console:**

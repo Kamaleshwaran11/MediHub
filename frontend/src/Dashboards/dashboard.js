@@ -23,7 +23,7 @@ async function loadDashboardStats() {
 
 async function fetchDashboardStats() {
     try {
-        const response = await fetch('http://localhost:8080/api/dashboard/stats');
+        const response = await fetch('http://localhost:8081/api/dashboard/stats');
         if (!response.ok) throw new Error('Failed to fetch dashboard stats');
         return await response.json();
     } catch (error) {
@@ -189,7 +189,7 @@ function setupEventListeners() {
 // Recent Activity Feed
 async function loadRecentActivity() {
     try {
-        const response = await fetch('http://localhost:8080/api/dashboard/activity');
+        const response = await fetch('http://localhost:8081/api/dashboard/activity');
         if (!response.ok) throw new Error('Failed to load recent activity');
         const activities = await response.json();
         displayRecentActivity(activities);
