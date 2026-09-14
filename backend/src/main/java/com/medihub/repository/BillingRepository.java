@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface BillingRepository extends JpaRepository<Billing, Long> {
-    @Query("SELECT b FROM Billing b WHERE LOWER(b.patient.name) LIKE LOWER(CONCAT('%', :patientName, '%'))")
+    @Query("SELECT b FROM Billing b WHERE LOWER(b.patient.firstName) LIKE LOWER(CONCAT('%', :patientName, '%'))")
     List<Billing> findByPatientNameContainingIgnoreCase(@Param("patientName") String patientName);
     
     List<Billing> findByStatus(String status);

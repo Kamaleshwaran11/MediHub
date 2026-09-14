@@ -52,7 +52,7 @@
 
 <!-- PAGE HEADER -->
 <div class="container-fluid bg-primary py-5">
-    <h1 class="text-center text-white">Patients</h1>
+    <h1 class="text-center text-white">Patients Module</h1>
 </div>
 
 <!-- Buttons -->
@@ -71,38 +71,54 @@
     <div id="patientList" class="row gy-4"></div>
 </div>
 
-<!-- -------------------------------------------------- -->
+
 <!-- ADD PATIENT POPUP -->
-<!-- -------------------------------------------------- -->
+
 <div id="addPatientPopupOverlay" class="popup-overlay" style="display:none;"></div>
 
-<div id="addPatientPopupWindow" class="popup-window" style="display:none; max-width:600px;">
+<div id="addPatientPopupWindow" class="popup-window" style="display:none; max-width:800px;">
     <div class="card">
         <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Add Patient</h4>
+            <h2 class="mb-0">
+        <img src="../../img/logotitle.png" style="height:40px;" class="me-2">Patient Module <br></h2>
+               <h3> Add the Patient Details</h3>
         </div>
         <div class="card-body">
             <form id="addPatientForm">
-                <div class="mb-3">
-                    <label class="form-label">Name *</label>
-                    <input id="patientName" class="form-control" required>
+                <h5 class="text-primary mb-3">Basic Information</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label" for="patientFirstName">First Name *</label><input id="patientFirstName" class="form-control" required></div>
+                    <div class="col-md-6 mb-3"><label class="form-label" for="patientLastName">Last Name *</label><input id="patientLastName" class="form-control" required></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientDateOfBirth">Date of Birth *</label><input id="patientDateOfBirth" class="form-control" type="date" required></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientGender">Gender</label><select id="patientGender" class="form-control"><option value="">Select Gender</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientBloodGroup">Blood Group</label><input id="patientBloodGroup" class="form-control"></div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Age *</label>
-                    <input id="patientAge" class="form-control" type="number" required>
+                <h5 class="text-primary mb-3">Contact Information</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label" for="patientMobileNumber">Mobile Number</label><input id="patientMobileNumber" class="form-control" type="tel"></div>
+                    <div class="col-md-6 mb-3"><label class="form-label" for="patientEmail">Email</label><input id="patientEmail" class="form-control" type="email"></div>
+                    <div class="col-12 mb-3"><label class="form-label" for="patientAddress">Address</label><input id="patientAddress" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientCity">City</label><input id="patientCity" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientState">State</label><input id="patientState" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientPinCode">PIN Code</label><input id="patientPinCode" class="form-control"></div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Gender *</label>
-                    <select id="patientGender" class="form-control" required>
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
+                <h5 class="text-primary mb-3">Emergency Contact</h5>
+                <div class="row">
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientEmergencyContactName">Name</label><input id="patientEmergencyContactName" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientEmergencyContactRelation">Relation</label><input id="patientEmergencyContactRelation" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientEmergencyContactNumber">Phone Number</label><input id="patientEmergencyContactNumber" class="form-control" type="tel"></div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Phone *</label>
-                    <input id="patientPhone" class="form-control" required>
+                <h5 class="text-primary mb-3">Medical Information</h5>
+                <div class="row">
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientMedicalHistory">Medical History</label><textarea id="patientMedicalHistory" class="form-control" rows="3"></textarea></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientAllergies">Allergies</label><textarea id="patientAllergies" class="form-control" rows="3"></textarea></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientCurrentMedications">Current Medications</label><textarea id="patientCurrentMedications" class="form-control" rows="3"></textarea></div>
+                </div>
+                <h5 class="text-primary mb-3">Insurance Information</h5>
+                <div class="row">
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientInsuranceProvider">Provider</label><input id="patientInsuranceProvider" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientInsurancePolicyNumber">Policy Number</label><input id="patientInsurancePolicyNumber" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="patientInsuranceGroupNumber">Group Number</label><input id="patientInsuranceGroupNumber" class="form-control"></div>
                 </div>
 
                 <button class="btn btn-primary" type="submit">Add Patient</button>
@@ -117,33 +133,47 @@
 <!-- -------------------------------------------------- -->
 <div id="editPatientPopupOverlay" class="popup-overlay" style="display:none;"></div>
 
-<div id="editPatientPopupWindow" class="popup-window" style="display:none; max-width:600px;">
+<div id="editPatientPopupWindow" class="popup-window" style="display:none; max-width:800px;">
     <div class="card">
         <div class="card-header bg-primary text-white">
             <h4 class="mb-0">Edit Patient</h4>
         </div>
         <div class="card-body">
             <form id="editPatientForm">
-                <div class="mb-3">
-                    <label class="form-label">Name *</label>
-                    <input id="editPatientName" class="form-control" required>
+                <h5 class="text-primary mb-3">Basic Information</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label" for="editPatientFirstName">First Name *</label><input id="editPatientFirstName" class="form-control" required></div>
+                    <div class="col-md-6 mb-3"><label class="form-label" for="editPatientLastName">Last Name *</label><input id="editPatientLastName" class="form-control" required></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientDateOfBirth">Date of Birth *</label><input id="editPatientDateOfBirth" class="form-control" type="date" required></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientGender">Gender</label><select id="editPatientGender" class="form-control"><option value="">Select Gender</option><option value="Male">Male</option><option value="Female">Female</option><option value="Other">Other</option></select></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientBloodGroup">Blood Group</label><input id="editPatientBloodGroup" class="form-control"></div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Age *</label>
-                    <input id="editPatientAge" class="form-control" type="number" required>
+                <h5 class="text-primary mb-3">Contact Information</h5>
+                <div class="row">
+                    <div class="col-md-6 mb-3"><label class="form-label" for="editPatientMobileNumber">Mobile Number</label><input id="editPatientMobileNumber" class="form-control" type="tel"></div>
+                    <div class="col-md-6 mb-3"><label class="form-label" for="editPatientEmail">Email</label><input id="editPatientEmail" class="form-control" type="email"></div>
+                    <div class="col-12 mb-3"><label class="form-label" for="editPatientAddress">Address</label><input id="editPatientAddress" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientCity">City</label><input id="editPatientCity" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientState">State</label><input id="editPatientState" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientPinCode">PIN Code</label><input id="editPatientPinCode" class="form-control"></div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Gender *</label>
-                    <select id="editPatientGender" class="form-control" required>
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
+                <h5 class="text-primary mb-3">Emergency Contact</h5>
+                <div class="row">
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientEmergencyContactName">Name</label><input id="editPatientEmergencyContactName" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientEmergencyContactRelation">Relation</label><input id="editPatientEmergencyContactRelation" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientEmergencyContactNumber">Phone Number</label><input id="editPatientEmergencyContactNumber" class="form-control" type="tel"></div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Phone *</label>
-                    <input id="editPatientPhone" class="form-control" required>
+                <h5 class="text-primary mb-3">Medical Information</h5>
+                <div class="row">
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientMedicalHistory">Medical History</label><textarea id="editPatientMedicalHistory" class="form-control" rows="3"></textarea></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientAllergies">Allergies</label><textarea id="editPatientAllergies" class="form-control" rows="3"></textarea></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientCurrentMedications">Current Medications</label><textarea id="editPatientCurrentMedications" class="form-control" rows="3"></textarea></div>
+                </div>
+                <h5 class="text-primary mb-3">Insurance Information</h5>
+                <div class="row">
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientInsuranceProvider">Provider</label><input id="editPatientInsuranceProvider" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientInsurancePolicyNumber">Policy Number</label><input id="editPatientInsurancePolicyNumber" class="form-control"></div>
+                    <div class="col-md-4 mb-3"><label class="form-label" for="editPatientInsuranceGroupNumber">Group Number</label><input id="editPatientInsuranceGroupNumber" class="form-control"></div>
                 </div>
 
                 <button class="btn btn-primary" type="submit">Update Patient</button>

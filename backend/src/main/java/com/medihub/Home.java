@@ -7,8 +7,8 @@ public class Home {
 
     @GetMapping("/")
     public String home() {
-        return "Welcome to MediHub backend! " +
-                " \n - ft.Kamaleshwaran [Medihub Team] ";
+        return "Welcome to MediHub backend!!!!..." +
+                " \n Mr.S Kamaleshwaran [Contact: admin-medihub@gmail.com] ";
 
     }
 }

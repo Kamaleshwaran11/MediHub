@@ -31,10 +31,26 @@ public class PatientService {
     public Patient updatePatient(Long id, Patient updatedPatient) {
         Patient existing = patientRepository.findById(id).orElse(null);
         if (existing != null) {
-            existing.setName(updatedPatient.getName());
-            existing.setAge(updatedPatient.getAge());
-            existing.setGender(updatedPatient.getGender());
-            existing.setPhone(updatedPatient.getPhone());
+                        existing.setFirstName(updatedPatient.getFirstName());
+                        existing.setLastName(updatedPatient.getLastName());
+                        existing.setDateOfBirth(updatedPatient.getDateOfBirth());
+                        existing.setGender(updatedPatient.getGender());
+                        existing.setBloodGroup(updatedPatient.getBloodGroup());
+                        existing.setMobileNumber(updatedPatient.getMobileNumber());
+                        existing.setEmail(updatedPatient.getEmail());
+                        existing.setAddress(updatedPatient.getAddress());
+                        existing.setCity(updatedPatient.getCity());
+                        existing.setState(updatedPatient.getState());
+                        existing.setPinCode(updatedPatient.getPinCode());
+                        existing.setEmergencyContactName(updatedPatient.getEmergencyContactName());
+                        existing.setEmergencyContactRelation(updatedPatient.getEmergencyContactRelation());
+                        existing.setEmergencyContactNumber(updatedPatient.getEmergencyContactNumber());
+                        existing.setMedicalHistory(updatedPatient.getMedicalHistory());
+                        existing.setAllergies(updatedPatient.getAllergies());
+                        existing.setCurrentMedications(updatedPatient.getCurrentMedications());
+                        existing.setInsuranceProvider(updatedPatient.getInsuranceProvider());
+                        existing.setInsurancePolicyNumber(updatedPatient.getInsurancePolicyNumber());
+                        existing.setInsuranceGroupNumber(updatedPatient.getInsuranceGroupNumber());
             return patientRepository.save(existing);
         }
         return null;

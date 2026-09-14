@@ -51,7 +51,7 @@ public class Appointment {
     }
 
     public String getPatientName() {
-        return patient != null ? patient.getName() : "N/A";
+        return patient != null ? patient.getFirstName() : "N/A";
     }
 
     public LocalDateTime getAppointmentDate() {

@@ -1,6 +1,27 @@
 const API_URL = "http://localhost:8081/api/patients";
 let patients = [];
 let currentEditingPatientId = null;
+const patientFields = [
+    "firstName", "lastName", "dateOfBirth", "gender", "bloodGroup",
+    "mobileNumber", "email", "address", "city", "state", "pinCode",
+    "emergencyContactName", "emergencyContactRelation", "emergencyContactNumber",
+    "medicalHistory", "allergies", "currentMedications", "insuranceProvider",
+    "insurancePolicyNumber", "insuranceGroupNumber"
+];
+
+function getPatientFormData(prefix) {
+    return patientFields.reduce((patient, field) => {
+        patient[field] = document.getElementById(`${prefix}${field.charAt(0).toUpperCase()}${field.slice(1)}`).value.trim();
+        return patient;
+    }, {});
+}
+
+function setPatientFormData(prefix, patient) {
+    patientFields.forEach(field => {
+        const input = document.getElementById(`${prefix}${field.charAt(0).toUpperCase()}${field.slice(1)}`);
+        input.value = patient[field] || "";
+    });
+}
 
 // Load patients on page load
 document.addEventListener("DOMContentLoaded", function () {
@@ -53,14 +74,14 @@ function displayPatients(list) {
                             font-size: 20px;
                             color: #fff;
                             margin-right: 10px;">
-                            ${patient.name ? patient.name.charAt(0).toUpperCase() : "P"}
+                            ${patient.firstName ? patient.firstName.charAt(0).toUpperCase() : "P"}
                         </div>
                         <div>
-                            <h5 class="mb-0">${patient.name}</h5>
-                            <p class="text-muted mb-0" style="font-size: 12px;">${patient.age} years, ${patient.gender}</p>
+                            <h5 class="mb-0">${patient.firstName || ""} ${patient.lastName || ""}</h5>
+                            <p class="text-muted mb-0" style="font-size: 12px;">${patient.dateOfBirth || "N/A"}, ${patient.gender || "N/A"}</p>
                         </div>
                     </div>
-                    <p class="mb-2"><strong>Phone:</strong> ${patient.phone || "N/A"}</p>
+                    <p class="mb-2"><strong>Phone:</strong> ${patient.mobileNumber || "N/A"}</p>
                     <p class="mb-3"><strong>ID:</strong> ${patient.id || "N/A"}</p>
                     <button class="btn btn-sm btn-primary w-100 mb-2" onclick="editPatient(${patient.id})">Edit</button>
                     <button class="btn btn-sm btn-danger w-100" onclick="deletePatient(${patient.id})">Delete</button>
@@ -80,8 +101,8 @@ function filterPatients() {
     }
 
     const filtered = patients.filter(patient =>
-        (patient.name && patient.name.toLowerCase().includes(text)) ||
-        (patient.phone && patient.phone.toLowerCase().includes(text)) ||
+        (`${patient.firstName || ""} ${patient.lastName || ""}`.toLowerCase().includes(text)) ||
+        (patient.mobileNumber && patient.mobileNumber.toLowerCase().includes(text)) ||
         (patient.gender && patient.gender.toLowerCase().includes(text))
     );
 
@@ -109,15 +130,10 @@ document.addEventListener("DOMContentLoaded", function () {
         addForm.addEventListener("submit", function (e) {
             e.preventDefault();
 
-            const newPatient = {
-                name: document.getElementById("patientName").value.trim(),
-                age: parseInt(document.getElementById("patientAge").value),
-                gender: document.getElementById("patientGender").value.trim(),
-                phone: document.getElementById("patientPhone").value.trim()
-            };
+            const newPatient = getPatientFormData("patient");
 
             // Validate fields
-            if (!newPatient.name || !newPatient.age || !newPatient.gender || !newPatient.phone) {
+            if (!newPatient.firstName || !newPatient.lastName || !newPatient.dateOfBirth) {
                 alert("Please fill in all required fields");
                 return;
             }
@@ -155,10 +171,7 @@ function editPatient(patientId) {
     }
 
     currentEditingPatientId = patientId;
-    document.getElementById("editPatientName").value = patient.name;
-    document.getElementById("editPatientAge").value = patient.age;
-    document.getElementById("editPatientGender").value = patient.gender;
-    document.getElementById("editPatientPhone").value = patient.phone;
+    setPatientFormData("editPatient", patient);
 
     document.getElementById("editPatientPopupOverlay").style.display = "block";
     document.getElementById("editPatientPopupWindow").style.display = "block";
@@ -178,14 +191,9 @@ document.addEventListener("DOMContentLoaded", function () {
         editForm.addEventListener("submit", function (e) {
             e.preventDefault();
 
-            const updatedPatient = {
-                name: document.getElementById("editPatientName").value.trim(),
-                age: parseInt(document.getElementById("editPatientAge").value),
-                gender: document.getElementById("editPatientGender").value.trim(),
-                phone: document.getElementById("editPatientPhone").value.trim()
-            };
+            const updatedPatient = getPatientFormData("editPatient");
 
-            if (!updatedPatient.name || !updatedPatient.age || !updatedPatient.gender || !updatedPatient.phone) {
+            if (!updatedPatient.firstName || !updatedPatient.lastName || !updatedPatient.dateOfBirth) {
                 alert("Please fill in all required fields");
                 return;
             }

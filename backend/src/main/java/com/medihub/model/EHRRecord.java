@@ -54,7 +54,7 @@ public class EHRRecord {
     }
 
     public String getPatientName() {
-        return patient != null ? patient.getName() : "N/A";
+        return patient != null ? patient.getFirstName() : "N/A";
     }
 
     public String getDoctorName() {
