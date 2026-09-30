@@ -87,12 +87,15 @@ public class PatientController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
         try {
-            Patient patient = patientService.getPatientById(id);
+            Patient patient = patientService.getPatientByIdEntity(id);
+
             if (patient != null) {
                 patientService.deletePatient(id);
                 return ResponseEntity.noContent().build();
             }
+
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

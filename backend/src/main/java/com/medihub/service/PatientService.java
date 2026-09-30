@@ -21,7 +21,17 @@ public class PatientService {
                 .map(this::convertToResponseDTO)
                 .toList();
     }
-    public Patient getPatientById(Long id) {
+    public PatientResponseDTO getPatientById(Long id) {
+
+        Patient patient = patientRepository.findById(id).orElse(null);
+
+        if (patient != null) {
+            return convertToResponseDTO(patient);
+        }
+
+        return null;
+    }
+    public Patient getPatientByIdEntity(Long id) {
         return patientRepository.findById(id).orElse(null);
     }
     public Patient savePatient(Patient patient){
