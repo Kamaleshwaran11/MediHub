@@ -1,6 +1,9 @@
 package com.medihub.controller;
 
 import java.util.List;
+
+import com.medihub.dto.PatientRequestDTO;
+import com.medihub.dto.PatientResponseDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,9 +30,9 @@ public class PatientController {
     private PatientService patientService;
 
     @GetMapping
-    public ResponseEntity<List<Patient>> getAllPatients(){
+    public ResponseEntity<List<PatientResponseDTO>> getAllPatients() {
         try {
-            List<Patient> patients = patientService.getAllPatients();
+            List<PatientResponseDTO> patients = patientService.getAllPatients();
             return ResponseEntity.ok(patients);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -37,22 +40,25 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> getPatient(@PathVariable Long id) {
+    public ResponseEntity<PatientResponseDTO> getPatient(@PathVariable Long id) {
         try {
-            Patient patient = patientService.getPatientById(id);
+            PatientResponseDTO patient = patientService.getPatientById(id);
+
             if (patient != null) {
                 return ResponseEntity.ok(patient);
             }
+
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 
     @PostMapping
-    public ResponseEntity<Patient> addPatient(@Valid @RequestBody Patient patient) {
+    public ResponseEntity<Patient> addPatient(@Valid @RequestBody PatientRequestDTO patientRequestDTO) {
         try {
-            Patient createdPatient = patientService.addPatient(patient);
+            Patient createdPatient = patientService.addPatient(patientRequestDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -60,13 +66,19 @@ public class PatientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Patient> updatePatient(@PathVariable Long id, @RequestBody Patient patient) {
+    public ResponseEntity<Patient> updatePatient(
+            @PathVariable Long id,
+            @Valid @RequestBody PatientRequestDTO patientRequestDTO) {
+
         try {
-            Patient updatedPatient = patientService.updatePatient(id, patient);
+            Patient updatedPatient = patientService.updatePatient(id, patientRequestDTO);
+
             if (updatedPatient != null) {
                 return ResponseEntity.ok(updatedPatient);
             }
+
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

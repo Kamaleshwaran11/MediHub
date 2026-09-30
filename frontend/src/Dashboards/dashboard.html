@@ -1,129 +1,326 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>MediHub Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Google Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="dashboard.css">
+    <meta charset="utf-8">
+    <title>Dashboard & Reports - MEDIHUB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../img/logotitle.png">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap & Template Stylesheets -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <link href="dashboard.css" rel="stylesheet">
 </head>
+
 <body>
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0 sticky-top">
+        <a href="../../index.html" class="navbar-brand p-0 d-flex align-items-center">
+            <img src="../../img/logotitle.png" alt="MediHub Logo" style="height:40px; width:auto; margin-right:10px;">
+            <h1 class="m-0 text-primary">MEDIHUB</h1>
+        </a>
 
-    <nav class="sidebar">
-        <h2>MediHub</h2>
-        <a href="#" class="active"><i class="fa fa-chart-line"></i> Dashboard</a>
-        <a href="#"><i class="fa fa-file-alt"></i> Reports</a>
-        <a href="#"><i class="fa fa-user-md"></i> Doctors</a>
-        <a href="#"><i class="fa fa-users"></i> Patients</a>
-        <a href="#"><i class="fa fa-calendar"></i> Appointments</a>
-        <a href="#"><i class="fa fa-cog"></i> Settings</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto py-0">
+                <a href="../../index.html" class="nav-item nav-link">Home</a>
+                <a href="../Doctors/doctors.html" class="nav-item nav-link">Doctors</a>
+                <a href="../Patients/patients.html" class="nav-item nav-link">Patients</a>
+                <a href="../Appoinment/Appointment.html" class="nav-item nav-link">Appointments</a>
+                <a href="../Staff/staff.html" class="nav-item nav-link">Staff</a>
+                <a href="../Pharmacy/Pharmacy.html" class="nav-item nav-link">Pharmacy</a>
+                <a href="../Billings/billing.html" class="nav-item nav-link">Billing & Invoices</a>
+                <a href="../EHR/ehr.html" class="nav-item nav-link">EHR</a>
+                <a href="dashboard.html" class="nav-item nav-link active">Dashboard & Reports</a>
+                <a href="../../contact.html" class="nav-item nav-link">Contact</a>
+            </div>
+            <a href="http://localhost:8081/login" class="btn btn-primary py-2 px-4 ms-3">Login/Register</a>
+        </div>
     </nav>
-    <div class="main-content">
-        <div class="dashboard-header">
-            <h1>Dashboard</h1>
-            <div>
-                <i class="fa fa-user-circle" style="font-size:1.8rem;color:#1976d2;"></i>
-            </div>
-        </div>
-        <div class="dashboard-cards">
-            <div class="card">
-                <div class="icon"><i class="fa fa-users"></i></div>
-                <div class="value" id="patientsCount">1,250</div>
-                <div class="label">Total Patients</div>
-            </div>
-            <div class="card">
-                <div class="icon"><i class="fa fa-user-md"></i></div>
-                <div class="value" id="doctorsCount">85</div>
-                <div class="label">Doctors</div>
-            </div>
-            <div class="card">
-                <div class="icon"><i class="fa fa-calendar-check"></i></div>
-                <div class="value" id="appointmentsCount">320</div>
-                <div class="label">Appointments</div>
-            </div>
-            <div class="card">
-                <div class="icon"><i class="fa fa-file-invoice-dollar"></i></div>
-                <div class="value" id="revenueCount">$45,000</div>
-                <div class="label">Revenue</div>
-            </div>
-        </div>
-        <!-- Charts Row -->
-        <div class="dashboard-cards" style="margin-top:20px;">
-            <div class="card" style="flex:2 1 600px;">
-                <h4>Patient Activity (Last 6 months)</h4>
-                <canvas id="patientActivityChart" height="160"></canvas>
-            </div>
-            <div class="card" style="flex:1 1 300px;">
-                <h4>Monthly Revenue</h4>
-                <canvas id="revenueChart" height="160"></canvas>
-            </div>
-            <div class="card" style="flex:1 1 300px;">
-                <h4>Appointments Breakdown</h4>
-                <canvas id="appointmentChart" height="160"></canvas>
-            </div>
-        </div>
+    <!-- Navbar End -->
 
-        <!-- Recent Activity -->
-        <div class="reports-section" style="margin-top:30px;">
-            <div class="reports-header">
-                <h2>Recent Activity</h2>
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-primary py-4 mb-4">
+        <div class="container py-3">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <h1 class="display-6 text-white mb-1">Dashboard & Analytics</h1>
+                    <p class="text-white-50 mb-0">Live healthcare metrics, monthly revenue, appointment analytics & reports</p>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <select id="dateRange" class="form-select form-select-sm bg-white" style="width: auto;">
+                        <option value="6months" selected>Last 6 Months</option>
+                        <option value="3months">Last 3 Months</option>
+                        <option value="year">Current Year</option>
+                    </select>
+                    <button class="btn btn-light text-primary font-weight-semi-bold px-3 py-2" onclick="loadDashboardStats()">
+                        <i class="fa fa-sync-alt me-1"></i> Refresh
+                    </button>
+                </div>
             </div>
-            <div id="activityFeed" style="margin-top:15px;"></div>
-        </div>
-        <div class="reports-section">
-            <div class="reports-header">
-                <h2>Recent Reports</h2>
-                <button style="background:#1976d2;color:#fff;border:none;padding:8px 18px;border-radius:5px;cursor:pointer;">
-                    <i class="fa fa-download"></i> Download
-                </button>
-            </div>
-            <table class="reports-table">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Report Name</th>
-                        <th>Type</th>
-                        <th>Status</th>
-                        <th>Download</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>2024-06-10</td>
-                        <td>Patient Summary</td>
-                        <td>PDF</td>
-                        <td><span style="color:green;">Completed</span></td>
-                        <td><a href="#"><i class="fa fa-download"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>2024-06-09</td>
-                        <td>Appointment Stats</td>
-                        <td>Excel</td>
-                        <td><span style="color:green;">Completed</span></td>
-                        <td><a href="#"><i class="fa fa-download"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>2024-06-08</td>
-                        <td>Revenue Report</td>
-                        <td>PDF</td>
-                        <td><span style="color:orange;">Processing</span></td>
-                        <td><a href="#"><i class="fa fa-spinner fa-spin"></i></a></td>
-                    </tr>
-                    <tr>
-                        <td>2024-06-07</td>
-                        <td>Doctor Performance</td>
-                        <td>Excel</td>
-                        <td><span style="color:green;">Completed</span></td>
-                        <td><a href="#"><i class="fa fa-download"></i></a></td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
+    <!-- Page Header End -->
+
+    <!-- Main Content Start -->
+    <div class="container pb-5">
+        <!-- Quick Action Bar -->
+        <div class="row g-3 mb-4">
+            <div class="col-12">
+                <div class="d-flex flex-wrap gap-2 align-items-center bg-white p-3 rounded shadow-sm border">
+                    <span class="text-dark font-weight-semi-bold me-2"><i class="fa fa-bolt text-primary me-1"></i> Quick Actions:</span>
+                    <button class="btn btn-sm btn-outline-primary quick-action" data-action="newAppointment">
+                        <i class="fa fa-calendar-plus me-1"></i> New Appointment
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary quick-action" data-action="newPatient">
+                        <i class="fa fa-user-plus me-1"></i> Register Patient
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary quick-action" data-action="newBill">
+                        <i class="fa fa-file-invoice-dollar me-1"></i> Generate Bill
+                    </button>
+                    <button class="btn btn-sm btn-outline-primary quick-action" data-action="pharmacy">
+                        <i class="fa fa-pills me-1"></i> Pharmacy Stock
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metric KPI Cards Row -->
+        <div class="row g-4 mb-4">
+            <!-- Total Patients -->
+            <div class="col-xl-3 col-md-6">
+                <div class="dashboard-kpi-card p-4 rounded bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted text-uppercase font-weight-medium small d-block mb-1">Total Patients</span>
+                            <h2 class="text-primary mb-0 font-weight-bold" id="patientsCount">--</h2>
+                            <small class="text-success"><i class="fa fa-arrow-up me-1"></i>Active registry</small>
+                        </div>
+                        <div class="kpi-icon-box bg-white text-primary rounded-circle shadow-sm">
+                            <i class="fa fa-users fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Doctors -->
+            <div class="col-xl-3 col-md-6">
+                <div class="dashboard-kpi-card p-4 rounded bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted text-uppercase font-weight-medium small d-block mb-1">Active Doctors</span>
+                            <h2 class="text-primary mb-0 font-weight-bold" id="doctorsCount">--</h2>
+                            <small class="text-success"><i class="fa fa-check-circle me-1"></i>Available on-call</small>
+                        </div>
+                        <div class="kpi-icon-box bg-white text-primary rounded-circle shadow-sm">
+                            <i class="fa fa-user-md fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Today's Appointments -->
+            <div class="col-xl-3 col-md-6">
+                <div class="dashboard-kpi-card p-4 rounded bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted text-uppercase font-weight-medium small d-block mb-1">Today's Visits</span>
+                            <h2 class="text-primary mb-0 font-weight-bold" id="appointmentsCount">--</h2>
+                            <small class="text-primary"><i class="fa fa-calendar me-1"></i>Scheduled for today</small>
+                        </div>
+                        <div class="kpi-icon-box bg-white text-primary rounded-circle shadow-sm">
+                            <i class="fa fa-calendar-check fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Revenue -->
+            <div class="col-xl-3 col-md-6">
+                <div class="dashboard-kpi-card p-4 rounded bg-light">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-muted text-uppercase font-weight-medium small d-block mb-1">Monthly Revenue</span>
+                            <h2 class="text-dark mb-0 font-weight-bold" id="revenueCount">₹0.00</h2>
+                            <small class="text-success"><i class="fa fa-chart-line me-1"></i>Current month</small>
+                        </div>
+                        <div class="kpi-icon-box bg-white text-dark rounded-circle shadow-sm">
+                            <i class="fa fa-file-invoice-dollar fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Charts Row -->
+        <div class="row g-4 mb-4">
+            <!-- Patient Activity Line Chart -->
+            <div class="col-lg-6">
+                <div class="card border-0 shadow-sm h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-primary mb-0"><i class="fa fa-chart-line me-2"></i>Patient Activity (Last 6 Months)</h5>
+                        <span class="badge bg-light text-primary">Monthly Trend</span>
+                    </div>
+                    <div class="chart-canvas-container">
+                        <canvas id="patientActivityChart" height="220"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monthly Revenue Bar Chart -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card border-0 shadow-sm h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-primary mb-0"><i class="fa fa-coins me-2"></i>Revenue Trend</h5>
+                        <span class="badge bg-light text-primary">Monthly</span>
+                    </div>
+                    <div class="chart-canvas-container">
+                        <canvas id="revenueChart" height="220"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointments Doughnut Breakdown -->
+            <div class="col-lg-3 col-md-6">
+                <div class="card border-0 shadow-sm h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-primary mb-0"><i class="fa fa-chart-pie me-2"></i>Appointments</h5>
+                        <span class="badge bg-light text-primary">Status</span>
+                    </div>
+                    <div class="chart-canvas-container">
+                        <canvas id="appointmentChart" height="220"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Feed & Reports Row -->
+        <div class="row g-4">
+            <!-- Recent Activity Section -->
+            <div class="col-lg-5">
+                <div class="card border-0 shadow-sm h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-primary mb-0"><i class="fa fa-history me-2"></i>Recent System Activity</h5>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="loadRecentActivity()"><i class="fa fa-sync-alt"></i></button>
+                    </div>
+                    <div id="activityFeed" style="max-height: 420px; overflow-y: auto;">
+                        <p class="text-muted small text-center py-4">Loading real-time updates...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Reports Table -->
+            <div class="col-lg-7">
+                <div class="card border-0 shadow-sm h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="text-primary mb-0"><i class="fa fa-file-alt me-2"></i>Recent Reports & Audits</h5>
+                        <button class="btn btn-sm btn-primary">
+                            <i class="fa fa-download me-1"></i> Export Reports
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Report Title</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Download</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2025-09-26</td>
+                                    <td class="font-weight-medium">Patient Consultation Audit</td>
+                                    <td><span class="badge bg-light text-dark">PDF</span></td>
+                                    <td><span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Completed</span></td>
+                                    <td class="text-end"><a href="#" class="btn btn-sm btn-outline-primary"><i class="fa fa-download"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td>2025-09-25</td>
+                                    <td class="font-weight-medium">Monthly Revenue Summary</td>
+                                    <td><span class="badge bg-light text-dark">Excel</span></td>
+                                    <td><span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Completed</span></td>
+                                    <td class="text-end"><a href="#" class="btn btn-sm btn-outline-primary"><i class="fa fa-download"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td>2025-09-24</td>
+                                    <td class="font-weight-medium">Pharmacy Inventory & Expiry</td>
+                                    <td><span class="badge bg-light text-dark">PDF</span></td>
+                                    <td><span class="badge bg-warning-subtle text-warning border border-warning-subtle px-2 py-1">Processing</span></td>
+                                    <td class="text-end"><a href="#" class="btn btn-sm btn-outline-secondary disabled"><i class="fa fa-spinner fa-spin"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td>2025-09-23</td>
+                                    <td class="font-weight-medium">Doctor Performance & Schedule</td>
+                                    <td><span class="badge bg-light text-dark">Excel</span></td>
+                                    <td><span class="badge bg-success-subtle text-success border border-success-subtle px-2 py-1">Completed</span></td>
+                                    <td class="text-end"><a href="#" class="btn btn-sm btn-outline-primary"><i class="fa fa-download"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Main Content End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light py-5" style="margin-top: 40px;">
+        <div class="container pt-3">
+            <div class="row g-5">
+                <div class="col-lg-4 col-md-6">
+                    <h3 class="text-white mb-4">MEDIHUB</h3>
+                    <p class="text-light-50">A comprehensive healthcare platform designed to streamline medical workflows, patient care, electronic health records, and billing operations.</p>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="text-white mb-4">Quick Navigation</h5>
+                    <div class="d-flex flex-column justify-content-start">
+                        <a class="text-light mb-2 text-decoration-none" href="../../index.html"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
+                        <a class="text-light mb-2 text-decoration-none" href="../Doctors/doctors.html"><i class="bi bi-arrow-right text-primary me-2"></i>Doctors</a>
+                        <a class="text-light mb-2 text-decoration-none" href="../Patients/patients.html"><i class="bi bi-arrow-right text-primary me-2"></i>Patients</a>
+                        <a class="text-light mb-2 text-decoration-none" href="../Appoinment/Appointment.html"><i class="bi bi-arrow-right text-primary me-2"></i>Appointments</a>
+                        <a class="text-light mb-2 text-decoration-none" href="../../contact.html"><i class="bi bi-arrow-right text-primary me-2"></i>Contact Support</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="text-white mb-4">System Contact</h5>
+                    <p class="text-light-50 mb-1"><i class="fa fa-envelope text-primary me-2"></i>admin-medihub@gmail.com</p>
+                    <p class="text-light-50"><i class="fa fa-server text-primary me-2"></i>API Server: localhost:8081</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid text-light py-3" style="background: #051225;">
+        <div class="container">
+            <div class="row g-0">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-md-0 small">&copy; <a class="text-white border-bottom" href="../../index.html">2025 MediHub</a>. All Rights Reserved.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <p class="mb-0 small">Designed by <a class="text-white border-bottom" href="https://Kamaleshwaran11.github.io">Kamaleshwaran.S</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
     <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="dashboard.js"></script>
 </body>

@@ -1,33 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>DOCTOR MANAGEMENT - MEDIHUB</title>
+    <title>Doctor Management - MEDIHUB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/png" href="../../img/logotitle.png">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Google Fonts -->
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
 
-    <!-- Icons -->
+    <!-- Icon Font Stylesheets -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Bootstrap -->
+    <!-- Customized Bootstrap & Template Stylesheets -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom -->
+    <link href="../../css/style.css" rel="stylesheet">
     <link href="doctors.css" rel="stylesheet">
 </head>
 <body>
 
-<!-- -------------------------------------------------- -->
-<!-- NAVBAR -->
-<!-- -------------------------------------------------- -->
-<nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3">
+<!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow-sm px-5 py-3 py-lg-0 sticky-top">
     <a href="../../index.html" class="navbar-brand p-0 d-flex align-items-center">
-        <img src="../../img/logotitle.png" style="height:40px;" class="me-2">
+        <img src="../../img/logotitle.png" alt="MediHub Logo" style="height: 40px; width: auto; margin-right: 10px;">
         <h1 class="m-0 text-primary">MEDIHUB</h1>
     </a>
 
@@ -36,148 +33,217 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarCollapse">
-        <div class="navbar-nav ms-auto">
+        <div class="navbar-nav ms-auto py-0">
             <a href="../../index.html" class="nav-item nav-link">Home</a>
-            <a href="../../about.html" class="nav-item nav-link">About</a>
             <a href="doctors.html" class="nav-item nav-link active">Doctors</a>
             <a href="../Patients/patients.html" class="nav-item nav-link">Patients</a>
             <a href="../Appoinment/Appointment.html" class="nav-item nav-link">Appointments</a>
             <a href="../Staff/staff.html" class="nav-item nav-link">Staff</a>
             <a href="../Pharmacy/Pharmacy.html" class="nav-item nav-link">Pharmacy</a>
-            <a href="../Billings/billing.html" class="nav-item nav-link">Billing</a>
+            <a href="../Billings/billing.html" class="nav-item nav-link">Billing & Invoices</a>
+            <a href="../EHR/ehr.html" class="nav-item nav-link">EHR</a>
+            <a href="../Dashboards/dashboard.html" class="nav-item nav-link">Dashboard & Reports</a>
             <a href="../../contact.html" class="nav-item nav-link">Contact</a>
-            <a href="../../dashboard.html" class="nav-item nav-link">Dashboard</a>
         </div>
+        <a href="http://localhost:8081/login" class="btn btn-primary py-2 px-4 ms-3">Login/Register</a>
     </div>
 </nav>
+<!-- Navbar End -->
 
-<!-- PAGE HEADER -->
-<div class="container-fluid bg-primary py-5">
-    <h1 class="text-center text-white">Doctors</h1>
+<!-- Page Header Start -->
+<div class="container-fluid bg-primary py-4 mb-4">
+    <div class="container py-3">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h1 class="display-6 text-white mb-1">Doctor Directory</h1>
+                <p class="text-white-50 mb-0">Manage doctor profiles, specializations, credentials, and clinic availability</p>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-light text-primary font-weight-semi-bold px-3 py-2" id="openAddDoctorPopupBtn">
+                    <i class="fa fa-user-plus me-1"></i> Add Doctor
+                </button>
+                <button class="btn btn-outline-light px-3 py-2" id="refreshBtn">
+                    <i class="fa fa-sync-alt me-1"></i> Refresh List
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- Page Header End -->
 
+<!-- Search & Content Section -->
+<div class="container pb-5">
+    <!-- Search Bar Card -->
+    <div class="card border-0 shadow-sm p-3 mb-4 bg-light">
+        <div class="row align-items-center g-3">
+            <div class="col-md-8">
+                <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0 text-primary">
+                        <i class="fa fa-search"></i>
+                    </span>
+                    <input id="searchInput" 
+                           type="text" 
+                           class="form-control border-start-0 ps-0" 
+                           placeholder="Search by doctor name, specialization, or location..."
+                           onkeyup="filterDoctors()">
+                </div>
+            </div>
+            <div class="col-md-4 text-md-end text-muted small">
+                <i class="fa fa-info-circle me-1 text-primary"></i> Real-time directory filter
+            </div>
+        </div>
+    </div>
 
-<!-- Buttons -->
-<div class="text-center mt-4">
-    <button class="btn btn-success" id="openAddDoctorPopupBtn">Add Doctor</button>
-    <button class="btn btn-primary" id="refreshBtn">Refresh List</button>
+    <!-- Doctor Cards Container -->
+    <div id="doctorList" class="row gy-4">
+        <!-- Rendered by doctors.js -->
+    </div>
 </div>
-
-
-<!-- SEARCH BAR -->
-<div class="container mt-4">
-    <input id="searchInput" 
-           type="text" 
-           class="form-control" 
-           placeholder="Search by name, specialization, or city..."
-           onkeyup="filterDoctors()">
-</div>
-
-
-<!-- DOCTOR CARDS -->
-<div class="container mt-4">
-    <div id="doctorList" class="row gy-4"></div>
-</div>
-
 
 <!-- -------------------------------------------------- -->
 <!-- ADD DOCTOR POPUP -->
 <!-- -------------------------------------------------- -->
 <div id="addDoctorPopupOverlay" class="popup-overlay" style="display:none;"></div>
 
-<div id="addDoctorPopupWindow" class="popup-window" style="display:none; max-width:600px;">
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Add Doctor</h4>
+<div id="addDoctorPopupWindow" class="popup-window" style="display:none; max-width:620px; width: 95%;">
+    <div class="card border-0 shadow-lg">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0 text-white font-weight-bold"><i class="fa fa-user-md me-2"></i>Register New Doctor</h5>
+            <button type="button" class="btn-close btn-close-white" onclick="document.getElementById('closeAddDoctorPopupBtn').click()"></button>
         </div>
-        <div class="card-body">
+        <div class="card-body p-4">
             <form id="addDoctorForm">
-                <div class="mb-3">
-                    <label class="form-label">Name *</label>
-                    <input id="doctorName" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Specialization *</label>
-                    <input id="doctorSpecialization" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Experience (Years) *</label>
-                    <input id="doctorExperience" class="form-control" type="number" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">City/Location *</label>
-                    <input id="doctorLocation" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Email *</label>
-                    <input id="doctorEmail" class="form-control" type="email" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Phone *</label>
-                    <input id="doctorPhone" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Password *</label>
-                    <input id="doctorPassword" class="form-control" type="password" required>
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <label class="form-label font-weight-semi-bold">Doctor Full Name *</label>
+                        <input id="doctorName" class="form-control" placeholder="Dr. John Doe" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-semi-bold">Specialization *</label>
+                        <input id="doctorSpecialization" class="form-control" placeholder="Cardiology, Neurology..." required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-semi-bold">Experience (Years) *</label>
+                        <input id="doctorExperience" class="form-control" type="number" min="0" placeholder="e.g. 8" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label font-weight-semi-bold">City / Clinic Location *</label>
+                        <input id="doctorLocation" class="form-control" placeholder="e.g. Apollo Hospital, Chennai" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-semi-bold">Email Address *</label>
+                        <input id="doctorEmail" class="form-control" type="email" placeholder="doctor@medihub.com" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-semi-bold">Phone Number *</label>
+                        <input id="doctorPhone" class="form-control" placeholder="+91 9876543210" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label font-weight-semi-bold">Portal Access Password *</label>
+                        <input id="doctorPassword" class="form-control" type="password" placeholder="Create portal password" required>
+                    </div>
                 </div>
 
-                <button class="btn btn-primary" type="submit">Add Doctor</button>
-                <button type="button" id="closeAddDoctorPopupBtn" class="btn btn-secondary">Close</button>
+                <div class="d-flex justify-content-end gap-2 mt-4 pt-2 border-top">
+                    <button type="button" id="closeAddDoctorPopupBtn" class="btn btn-secondary">Cancel</button>
+                    <button class="btn btn-primary px-4" type="submit">Save Doctor</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
-
 
 <!-- -------------------------------------------------- -->
 <!-- EDIT DOCTOR POPUP -->
 <!-- -------------------------------------------------- -->
 <div id="editDoctorPopupOverlay" class="popup-overlay" style="display:none;"></div>
 
-<div id="editDoctorPopupWindow" class="popup-window" style="display:none; max-width:600px;">
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Edit Doctor</h4>
+<div id="editDoctorPopupWindow" class="popup-window" style="display:none; max-width:620px; width: 95%;">
+    <div class="card border-0 shadow-lg">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-3">
+            <h5 class="mb-0 text-white font-weight-bold"><i class="fa fa-user-edit me-2"></i>Edit Doctor Profile</h5>
+            <button type="button" class="btn-close btn-close-white" onclick="document.getElementById('closeEditDoctorPopupBtn').click()"></button>
         </div>
-        <div class="card-body">
+        <div class="card-body p-4">
             <form id="editDoctorForm">
-                <div class="mb-3">
-                    <label class="form-label">Name *</label>
-                    <input id="editDoctorName" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Specialization *</label>
-                    <input id="editDoctorSpecialization" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Experience (Years) *</label>
-                    <input id="editDoctorExperience" class="form-control" type="number" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">City/Location *</label>
-                    <input id="editDoctorLocation" class="form-control" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Email *</label>
-                    <input id="editDoctorEmail" class="form-control" type="email" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Phone *</label>
-                    <input id="editDoctorPhone" class="form-control" required>
+                <div class="row g-3">
+                    <div class="col-md-12">
+                        <label class="form-label font-weight-semi-bold">Doctor Full Name *</label>
+                        <input id="editDoctorName" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-semi-bold">Specialization *</label>
+                        <input id="editDoctorSpecialization" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-semi-bold">Experience (Years) *</label>
+                        <input id="editDoctorExperience" class="form-control" type="number" min="0" required>
+                    </div>
+                    <div class="col-md-12">
+                        <label class="form-label font-weight-semi-bold">City / Clinic Location *</label>
+                        <input id="editDoctorLocation" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-semi-bold">Email Address *</label>
+                        <input id="editDoctorEmail" class="form-control" type="email" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label font-weight-semi-bold">Phone Number *</label>
+                        <input id="editDoctorPhone" class="form-control" required>
+                    </div>
                 </div>
 
-                <button class="btn btn-primary" type="submit">Update Doctor</button>
-                <button type="button" id="closeEditDoctorPopupBtn" class="btn btn-secondary">Close</button>
+                <div class="d-flex justify-content-end gap-2 mt-4 pt-2 border-top">
+                    <button type="button" id="closeEditDoctorPopupBtn" class="btn btn-secondary">Cancel</button>
+                    <button class="btn btn-primary px-4" type="submit">Update Doctor</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
 
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-light py-5 mt-5">
+    <div class="container pt-3">
+        <div class="row g-5">
+            <div class="col-lg-4 col-md-6">
+                <h3 class="text-white mb-4">MEDIHUB</h3>
+                <p class="text-light-50">Streamlining hospital scheduling, doctor records, clinical documentation, and patient care with next-generation digital healthcare management.</p>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <h5 class="text-white mb-4">Quick Navigation</h5>
+                <div class="d-flex flex-column justify-content-start">
+                    <a class="text-light mb-2 text-decoration-none" href="../../index.html"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
+                    <a class="text-light mb-2 text-decoration-none" href="../Patients/patients.html"><i class="bi bi-arrow-right text-primary me-2"></i>Patients</a>
+                    <a class="text-light mb-2 text-decoration-none" href="../Appoinment/Appointment.html"><i class="bi bi-arrow-right text-primary me-2"></i>Appointments</a>
+                    <a class="text-light mb-2 text-decoration-none" href="../Billings/billing.html"><i class="bi bi-arrow-right text-primary me-2"></i>Billing & Invoices</a>
+                    <a class="text-light mb-2 text-decoration-none" href="../../contact.html"><i class="bi bi-arrow-right text-primary me-2"></i>Contact</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <h5 class="text-white mb-4">Support Contact</h5>
+                <p class="text-light-50 mb-1"><i class="fa fa-envelope text-primary me-2"></i>admin-medihub@gmail.com</p>
+                <p class="text-light-50"><i class="fa fa-server text-primary me-2"></i>Backend API: localhost:8081</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid text-light py-3" style="background: #051225;">
+    <div class="container">
+        <div class="row g-0">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-md-0 small">&copy; <a class="text-white border-bottom" href="../../index.html">2025 MediHub</a>. All Rights Reserved.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <p class="mb-0 small">Designed by <a class="text-white border-bottom" href="https://Kamaleshwaran11.github.io">Kamaleshwaran.S</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
 
-<!-- -------------------------------------------------- -->
-<!-- SCRIPTS -->
-<!-- -------------------------------------------------- -->
-<script src="../../js/bootstrap.bundle.min.js"></script>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="doctors.js"></script>
 
 </body>
