@@ -1,21 +1,11 @@
-package com.medihub.model;
-import jakarta.persistence.*;
+package com.medihub.dto;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name="doctors")
-@Getter
-@Setter
-public class Doctor {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class DoctorRequestDTO {
     //Basic Information for Doctor Details
     @NotBlank(message="Name is mandatory")
     private String name;
@@ -59,36 +49,8 @@ public class Doctor {
 
     private String status;
 
-    public Doctor() {
-        // Default constructor
-        //JPA needs a no-args constructor.
-    }
-
-    public Doctor(String name, LocalDate dateOfBirth, String gender, String mobileNumber,String email, String address, String city, String state, String pinCode, String specialization,String qualification,Integer experienceYears,String licenseNumber,String department,Double consultationFee, LocalDate joiningDate,String status){
-        this.name = name;
-        this.dateOfBirth = dateOfBirth;
-        this.gender = gender;
-        this.mobileNumber = mobileNumber;
-        this.email = email;
-        this.address = address;
-        this.city = city;
-        this.state = state;
-        this.pinCode = pinCode;
-        this.specialization = specialization;
-        this.qualification = qualification;
-        this.experienceYears = experienceYears;
-        this.licenseNumber = licenseNumber;
-        this.department = department;
-        this.consultationFee = consultationFee;
-        this.joiningDate = joiningDate;
-        this.status = status;
-    }
 
     // Getters
-    public Long getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
@@ -158,9 +120,6 @@ public class Doctor {
 
 
     // Setters
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public void setName(String name) {
         this.name = name;
@@ -229,5 +188,4 @@ public class Doctor {
     public void setStatus(String status) {
         this.status = status;
     }
-
 }

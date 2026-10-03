@@ -31,12 +31,10 @@ public class PatientController {
 
     @GetMapping
     public ResponseEntity<List<PatientResponseDTO>> getAllPatients() {
-        try {
-            List<PatientResponseDTO> patients = patientService.getAllPatients();
-            return ResponseEntity.ok(patients);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
+
+        List<PatientResponseDTO> patients = patientService.getAllPatients();
+
+        return ResponseEntity.ok(patients);
     }
 
     @GetMapping("/{id}")
@@ -53,12 +51,13 @@ public class PatientController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+
     }
 
     @PostMapping
-    public ResponseEntity<Patient> addPatient(@Valid @RequestBody PatientRequestDTO patientRequestDTO) {
+    public ResponseEntity<PatientResponseDTO> addPatient(@Valid @RequestBody PatientRequestDTO patientRequestDTO) {
         try {
-            Patient createdPatient = patientService.addPatient(patientRequestDTO);
+            PatientResponseDTO createdPatient = patientService.addPatient(patientRequestDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdPatient);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -66,12 +65,12 @@ public class PatientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Patient> updatePatient(
+    public ResponseEntity<PatientResponseDTO> updatePatient(
             @PathVariable Long id,
             @Valid @RequestBody PatientRequestDTO patientRequestDTO) {
 
         try {
-            Patient updatedPatient = patientService.updatePatient(id, patientRequestDTO);
+            PatientResponseDTO updatedPatient = patientService.updatePatient(id, patientRequestDTO);
 
             if (updatedPatient != null) {
                 return ResponseEntity.ok(updatedPatient);

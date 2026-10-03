@@ -34,10 +34,8 @@ public class PatientService {
     public Patient getPatientByIdEntity(Long id) {
         return patientRepository.findById(id).orElse(null);
     }
-    public Patient savePatient(Patient patient){
-        return patientRepository.save(patient);
-    }
-    public Patient addPatient(PatientRequestDTO dto) {
+
+    public PatientResponseDTO addPatient(PatientRequestDTO dto) {
 
         Patient patient = new Patient();
 
@@ -66,13 +64,15 @@ public class PatientService {
         patient.setInsurancePolicyNumber(dto.getInsurancePolicyNumber());
         patient.setInsuranceGroupNumber(dto.getInsuranceGroupNumber());
 
-        return patientRepository.save(patient);
+        Patient savedPatient = patientRepository.save(patient);
+
+        return convertToResponseDTO(savedPatient);
     }
 
     public void deletePatient(Long id) {
         patientRepository.deleteById(id);
     }
-    public Patient updatePatient(Long id, PatientRequestDTO dto) {
+    public PatientResponseDTO updatePatient(Long id, PatientRequestDTO dto) {
 
         Patient existing = patientRepository.findById(id).orElse(null);
 
@@ -103,7 +103,9 @@ public class PatientService {
             existing.setInsurancePolicyNumber(dto.getInsurancePolicyNumber());
             existing.setInsuranceGroupNumber(dto.getInsuranceGroupNumber());
 
-            return patientRepository.save(existing);
+            Patient updatedPatient = patientRepository.save(existing);
+
+            return convertToResponseDTO(updatedPatient);
         }
 
 
